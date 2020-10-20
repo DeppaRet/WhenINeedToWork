@@ -1,0 +1,181 @@
+﻿@page
+@model IndexModel
+@{
+  ViewData["Title"] = "Home page";
+}
+
+<head>
+  <link href="css/calendar.css" rel="stylesheet">
+  <link href="" />
+</head>
+<div class="text-center">
+  <h1 class="display-4">"Добро пожаловать"</h1>
+  <p>Здесь вы сможете создать свой календарь рабочих дней</p>
+</div>
+
+<body onload="startTime()">
+  <script src="js/clock.js">
+  </script>
+  <div id="txt"></div>
+</body>
+
+<body>
+  <form>
+    <p>Выберите свой первый рабочий день</p>
+    <p>
+      <input type="date" name="calendar">
+      <select>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+      </select>
+      x
+      <select>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+      </select>
+      <input type="submit" name="submit" title="Отправить">
+    </p>
+
+  </form>
+
+  <table id="calendarBig">
+    <thead>
+      <tr><td><td><td>
+    <tbody>
+      <tr>
+        <td>
+          <table data-m="0">
+            <thead>
+              <tr><td colspan="7">Январь
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+        <td>
+          <table data-m="1">
+            <thead>
+              <tr><td colspan="7">Февраль
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+        <td>
+          <table data-m="2">
+            <thead>
+              <tr><td colspan="7">Март
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+      <tr>
+        <td>
+          <table data-m="3">
+            <thead>
+              <tr><td colspan="7">Апрель
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+        <td>
+          <table data-m="4">
+            <thead>
+              <tr><td colspan="7">Май
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+        <td>
+          <table data-m="5">
+            <thead>
+              <tr><td colspan="7">Июнь
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+      <tr>
+        <td>
+          <table data-m="6">
+            <thead>
+              <tr><td colspan="7">Июль
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+        <td>
+          <table data-m="7">
+            <thead>
+              <tr><td colspan="7">Август
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+        <td>
+          <table data-m="8">
+            <thead>
+              <tr><td colspan="7">Сентябрь
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+      <tr>
+        <td>
+          <table data-m="9">
+            <thead>
+              <tr><td colspan="7">Октябрь
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+        <td>
+          <table data-m="10">
+            <thead>
+              <tr><td colspan="7">Ноябрь
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+        <td>
+          <table data-m="11">
+            <thead>
+              <tr><td colspan="7">Декабрь
+              <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+            <tbody>
+          </table>
+  </table>
+  <div id="calendarTable">
+    <div data-dd="18" data-mm="8" data-text="День рождения"></div>
+    <div data-dd="5" data-mm="1" data-yyyy="2013" data-text="регулярные выражения
+JavaScript примеры" data-link="http://shpargalkablog.ru/2013/07/replace.html"></div>
+    <div data-dd="28" data-mm="10" data-yyyy="2020" data-text="✈ встреча у бабушки
+☏ поздравить Ивана Ивановича с именинами
+☄ комета ISON"></div>
+  </div>
+</body>
+
+
+<script src="js/calendar.js"></script>
+
+
+<script>
+  //модальное начало
+
+  function modalWindow() {
+    var modal = $myModal({
+      title: 'День',
+      content: '<p>Содержимое модального окна...</p>',
+      footerButtons: [
+        { class: 'btn btn__cancel', text: 'Отмена', handler: 'modalHandlerCancel' },
+        { class: 'btn btn__ok', text: 'ОК', handler: 'modalHandlerOk' }
+      ]
+    });
+    $('calendarBig').on('click', 'tr', function () {
+      var idx = $(this).index() + 1;
+      $('.modal').hide();
+      $('$myModal').show();
+      //$('#myModal' + idx).show();
+    });
+  }
+//модальное конец
+</script>
+
+
+<a class="print-doc" href="javascript:(print());"> Распечатать</a>
