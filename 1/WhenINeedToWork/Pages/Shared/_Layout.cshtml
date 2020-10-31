@@ -1,20 +1,14 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+@*<html lang="en">*@
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WhenINeedToWork</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-
-    <link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
-    <link rel="stylesheet" href="css/style.css"> <!-- Gem style -->
-    <script src="js/modernizr.js"></script> <!-- Modernizr -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - WhenINeedToWork</title>
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
   <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
       <div class="container">
@@ -48,116 +42,116 @@
     </main>
   </div>
 
+<!--<div class="cd-user-modal">-->
+<!-- все формы на фоне затемнения-->
+<!--<div class="cd-user-modal-container">-->
+<!-- основной контейнер -->
+<!--<ul class="cd-switcher">
+  <li><a href="#0">Вход</a></li>
+  <li><a href="#0">Регистрация</a></li>
+</ul>
 
-  <div class="cd-user-modal">
-    <!-- все формы на фоне затемнения-->
-    <div class="cd-user-modal-container">
-      <!-- основной контейнер -->
-      <ul class="cd-switcher">
-        <li><a href="#0">Вход</a></li>
-        <li><a href="#0">Регистрация</a></li>
-      </ul>
+<div id="cd-login">-->
+<!-- форма входа -->
+<!--<form class="cd-form">
+  <p class="fieldset">
+    <label class="image-replace cd-email" for="signin-email">E-mail</label>
+    <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+  </p>
 
-      <div id="cd-login">
-        <!-- форма входа -->
-        <form class="cd-form">
-          <p class="fieldset">
-            <label class="image-replace cd-email" for="signin-email">E-mail</label>
-            <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
-            <span class="cd-error-message">Здесь сообщение об ошибке!</span>
-          </p>
+  <p class="fieldset">
+    <label class="image-replace cd-password" for="signin-password">Пароль</label>
+    <input class="full-width has-padding has-border" id="signin-password" type="text" placeholder="Пароль">
+    <a href="#0" class="hide-password">Скрыть</a>
+    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+  </p>
 
-          <p class="fieldset">
-            <label class="image-replace cd-password" for="signin-password">Пароль</label>
-            <input class="full-width has-padding has-border" id="signin-password" type="text" placeholder="Пароль">
-            <a href="#0" class="hide-password">Скрыть</a>
-            <span class="cd-error-message">Здесь сообщение об ошибке!</span>
-          </p>
+  <p class="fieldset">
+    <input type="checkbox" id="remember-me" checked>
+    <label for="remember-me">Запомнить меня</label>
+  </p>
 
-          <p class="fieldset">
-            <input type="checkbox" id="remember-me" checked>
-            <label for="remember-me">Запомнить меня</label>
-          </p>
+  <p class="fieldset">
+    <input class="full-width" type="submit" value="Войти">
+  </p>
+</form>
 
-          <p class="fieldset">
-            <input class="full-width" type="submit" value="Войти">
-          </p>
-        </form>
+<p class="cd-form-bottom-message"><a href="#0">Забыли свой пароль?</a></p>-->
+<!-- <a href="#0" class="cd-close-form">Close</a> -->
+<!--</div>--> <!-- cd-login -->
 
-        <p class="cd-form-bottom-message"><a href="#0">Забыли свой пароль?</a></p>
-        <!-- <a href="#0" class="cd-close-form">Close</a> -->
-      </div> <!-- cd-login -->
+<!--<div id="cd-signup">-->
+<!-- форма регистрации -->
+<!--<form class="cd-form">
+  <p class="fieldset">
+    <label class="image-replace cd-username" for="signup-username">Имя пользователя</label>
+    <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Имя пользователя">
+    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+  </p>
 
-      <div id="cd-signup">
-        <!-- форма регистрации -->
-        <form class="cd-form">
-          <p class="fieldset">
-            <label class="image-replace cd-username" for="signup-username">Имя пользователя</label>
-            <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Имя пользователя">
-            <span class="cd-error-message">Здесь сообщение об ошибке!</span>
-          </p>
+  <p class="fieldset">
+    <label class="image-replace cd-email" for="signup-email">E-mail</label>
+    <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
+    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+  </p>
 
-          <p class="fieldset">
-            <label class="image-replace cd-email" for="signup-email">E-mail</label>
-            <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
-            <span class="cd-error-message">Здесь сообщение об ошибке!</span>
-          </p>
+  <p class="fieldset">
+    <label class="image-replace cd-password" for="signup-password">Пароль</label>
+    <input class="full-width has-padding has-border" id="signup-password" type="text" placeholder="Пароль">
+    <a href="#0" class="hide-password">Скрыть</a>
+    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+  </p>
 
-          <p class="fieldset">
-            <label class="image-replace cd-password" for="signup-password">Пароль</label>
-            <input class="full-width has-padding has-border" id="signup-password" type="text" placeholder="Пароль">
-            <a href="#0" class="hide-password">Скрыть</a>
-            <span class="cd-error-message">Здесь сообщение об ошибке!</span>
-          </p>
+  <p class="fieldset">
+    <input type="checkbox" id="accept-terms">
+    <label for="accept-terms">Я согласен с <a href="#0">Условиями</a></label>
+  </p>
 
-          <p class="fieldset">
-            <input type="checkbox" id="accept-terms">
-            <label for="accept-terms">Я согласен с <a href="#0">Условиями</a></label>
-          </p>
+  <p class="fieldset">
+    <input class="full-width has-padding" type="submit" value="Создать аккаунт">
+  </p>
+</form>-->
 
-          <p class="fieldset">
-            <input class="full-width has-padding" type="submit" value="Создать аккаунт">
-          </p>
-        </form>
+<!-- <a href="#0" class="cd-close-form">Close</a> -->
+<!--</div>--> <!-- cd-signup -->
 
-        <!-- <a href="#0" class="cd-close-form">Close</a> -->
-      </div> <!-- cd-signup -->
+<!--<div id="cd-reset-password">-->
+<!-- форма восстановления пароля -->
+<!--<p class="cd-form-message">Забыли пароль? Пожалуйста, введите адрес своей электронной почты. Вы получите ссылку, чтобы создать новый пароль.</p>
 
-      <div id="cd-reset-password">
-        <!-- форма восстановления пароля -->
-        <p class="cd-form-message">Забыли пароль? Пожалуйста, введите адрес своей электронной почты. Вы получите ссылку, чтобы создать новый пароль.</p>
+<form class="cd-form">
+  <p class="fieldset">
+    <label class="image-replace cd-email" for="reset-email">E-mail</label>
+    <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
+    <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+  </p>
 
-        <form class="cd-form">
-          <p class="fieldset">
-            <label class="image-replace cd-email" for="reset-email">E-mail</label>
-            <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
-            <span class="cd-error-message">Здесь сообщение об ошибке!</span>
-          </p>
+  <p class="fieldset">
+    <input class="full-width has-padding" type="submit" value="Восстановить пароль">
+  </p>
+</form>
 
-          <p class="fieldset">
-            <input class="full-width has-padding" type="submit" value="Восстановить пароль">
-          </p>
-        </form>
+<p class="cd-form-bottom-message"><a href="#0">Вернуться к входу</a></p>
+</div>--> <!-- cd-reset-password -->
+<!--<a href="#0" class="cd-close-form">Закрыть</a>
+</div>--> <!-- cd-user-modal-container -->
+<!--</div>--> <!-- cd-user-modal -->
 
-        <p class="cd-form-bottom-message"><a href="#0">Вернуться к входу</a></p>
-      </div> <!-- cd-reset-password -->
-      <a href="#0" class="cd-close-form">Закрыть</a>
-    </div> <!-- cd-user-modal-container -->
-</div> <!-- cd-user-modal -->
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/main.js"></script>--> <!-- Gem jQuery -->
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="js/main.js"></script> <!-- Gem jQuery -->
+<!--<footer class="border-top footer text-muted">
+  <div class="container">
+    2020 - WhenINeedToWork - <a asp-area="" asp-page="/Privacy">Privacy</a>
+  </div>
+</footer>
 
-  <footer class="border-top footer text-muted">
-    <div class="container">
-      &copy; 2020 - WhenINeedToWork - <a asp-area="" asp-page="/Privacy">Privacy</a>
-    </div>
-  </footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/modal.js"></script>
 
-  <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="~/js/site.js" asp-append-version="true"></script>
-
-  @RenderSection("Scripts", required: false)
+@RenderSection("Scripts", required: false)
 </body>
-</html>
+
