@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WhenINeedToWork.Models\WhenINeedToWork.Models.csproj" />
+    <ProjectReference Include="..\WhenINeedToWork.Services\WhenINeedToWork.Services.csproj" />
+  </ItemGroup>
+
 </Project>
