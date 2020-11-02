@@ -75,6 +75,26 @@
     }
 }
 
+let selectedTd;
+
+calendarBig.onclick = function (event) {
+    let td = event.target.closest('td'); // (1)
+
+    if (!td) return; // (2)
+
+    if (!table.contains(td)) return; // (3)
+
+    highlight(td); // (4)
+};
+
+function highlight(td) {
+    if (selectedTd) { // убрать существующую подсветку, если есть
+        selectedTd.classList.remove('highlight');
+    }
+    selectedTd = td;
+    selectedTd.classList.add('highlight'); // подсветить новый td
+}
+
 calendarBig(new Date().getFullYear());
 document.querySelector('#calendarBig > thead td:nth-child(1)').onclick = calendarBigG;
 document.querySelector('#calendarBig > thead td:nth-child(3)').onclick = calendarBigG;

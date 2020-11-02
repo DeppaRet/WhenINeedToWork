@@ -11,14 +11,26 @@
     width: '700 px',
     footerButtons: [
         {
-            text: 'Ok', type: 'primary', handler() {
+            text: 'Ок', type: 'primary', handler() {
                 console.log('primary btn clicked')
+                modal.close()  //обращение к функции в дургом файле
             }
         },
         {
-            text: 'Cancel', type: 'danger', handler() {
+            text: 'Отмена', type: 'danger', handler() {
                 console.log('danger btn clicked')
+                modal.close()
             }
         }
     ]
 })
+
+document.addEventListener('click', event => {
+    const btnType = event.target.dataset.btn
+    event.preventDefault()
+
+    if (event.target.dataset.btn === 'login') {
+        modal.open()
+    }
+});
+
