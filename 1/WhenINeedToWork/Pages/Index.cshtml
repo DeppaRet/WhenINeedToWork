@@ -5,18 +5,24 @@
 }
 
 <head>
+
   <link href="css/calendar.css" rel="stylesheet">
-  <link href="" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/modal.css"/>
+  @*<link rel="stylesheet" href="css/fullcalendar.css"/>*@
+  <link href=""/>
+
 </head>
+
 <div class="text-center">
   <h1 class="display-4">"Добро пожаловать"</h1>
   <p>Здесь вы сможете создать свой календарь рабочих дней</p>
 </div>
 
 <body onload="startTime()">
-  <script src="js/clock.js">
-  </script>
-  <div id="txt"></div>
+<script src="js/clock.js"></script>
+<div id="txt"></div>
+<div class="filter"></div>
 </body>
 
 <body>
@@ -47,8 +53,10 @@
     </p>
 
   </form>
+  
+@*<div id="calendar"></div>*@
 
-  <table id="calendarBig">
+<table id="calendarBig">
     <thead>
       <tr><td><td><td>
     <tbody>
@@ -141,41 +149,35 @@
             <tbody>
           </table>
   </table>
-  <div id="calendarTable">
-    <div data-dd="18" data-mm="8" data-text="День рождения"></div>
-    <div data-dd="5" data-mm="1" data-yyyy="2013" data-text="регулярные выражения
+<div id="calendarTable">
+  <div data-dd="18" data-mm="8" data-text="День рождения"></div>
+  <div data-dd="5" data-mm="1" data-yyyy="2013" data-text="регулярные выражения
 JavaScript примеры" data-link="http://shpargalkablog.ru/2013/07/replace.html"></div>
-    <div data-dd="28" data-mm="10" data-yyyy="2020" data-text="✈ встреча у бабушки
+  <div data-dd="28" data-mm="10" data-yyyy="2020" data-text="✈ встреча у бабушки
 ☏ поздравить Ивана Ивановича с именинами
 ☄ комета ISON"></div>
-  </div>
+</div>
+
+
+<a> </a>
+<img src="~/images/printer.png" alt="Распечатать">
+<button onclick="window.print()">Распечатать</button> @*пододвинуть кнопку вниз*@
+
+<a href="https://www.donationalerts.com/r/deppa" target="_blank"><img  src="~/images/credit-card.png" alt="Плоти"></a>
+<a href="https://www.donationalerts.com/r/deppa">Donate</a>
 </body>
 
+@*<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/fullcalendar.js"></script>
+<script src="js/main.js"></script>*@
 
 <script src="js/calendar.js"></script>
+<script src="js/base.js"></script>@*между ними*@
+
+<script src="js/plugins/modal.js"></script>
+
+<script src="js/index.js"></script> @*обязательно в конце*@
 
 
-<script>
-  //модальное начало
 
-  function modalWindow() {
-    var modal = $myModal({
-      title: 'День',
-      content: '<p>Содержимое модального окна...</p>',
-      footerButtons: [
-        { class: 'btn btn__cancel', text: 'Отмена', handler: 'modalHandlerCancel' },
-        { class: 'btn btn__ok', text: 'ОК', handler: 'modalHandlerOk' }
-      ]
-    });
-    $('calendarBig').on('click', 'tr', function () {
-      var idx = $(this).index() + 1;
-      $('.modal').hide();
-      $('$myModal').show();
-      //$('#myModal' + idx).show();
-    });
-  }
-//модальное конец
-</script>
-
-
-<a class="print-doc" href="javascript:(print());"> Распечатать</a>
