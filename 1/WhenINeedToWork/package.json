@@ -3,6 +3,6 @@
   "name": "asp.net",
   "private": true,
   "devDependencies": {
-    "fullcalendar": "5.2.0"
+    "fullcalendar": "5.3.2"
   }
 }

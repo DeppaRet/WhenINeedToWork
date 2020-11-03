@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="jQuery.Fullcalendar" Version="3.9.0" />
+  </ItemGroup>
+
 </Project>
