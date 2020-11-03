@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="jQuery.Fullcalendar" Version="3.9.0" />
+    <ProjectReference Include="..\WhenINeedToWork.Models\WhenINeedToWork.Models.csproj" />
+    <ProjectReference Include="..\WhenINeedToWork.Services\WhenINeedToWork.Services.csproj" />
   </ItemGroup>
 
 </Project>
