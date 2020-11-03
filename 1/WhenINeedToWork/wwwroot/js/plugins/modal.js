@@ -52,6 +52,8 @@ function _createModal(options) {
     return modal
 }
 
+
+
 $.modal = function (options) {
     const animation_speed = 200
     const $modal = _createModal(options)
@@ -75,6 +77,7 @@ $.modal = function (options) {
             }, animation_speed)
         },
     }
+
 
     const listener = event => {
         if (event.target.dataset.close) {

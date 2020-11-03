@@ -3,17 +3,21 @@
     closable: true,
     content: `
     <p>Логин</p> 
-    <input type="email" name="login">
+    <input id="email" type="email" name="login" asp-for="email" placeholder="Komm.mm@yandex.ru">
     <p>Пароль</p> 
-    <input type="password" name = "password">
-    <input type="submit" name="submit" title="Отправить">
-    <p>Text</p>`,
+    <input id="password" type="password" name = "password" asp-for="password" pattern="(?=.*\d)(?=.*[a-zA-Zа-яА-Я]).{6,}" title="Не менее 6 знаков, в том числе хотя бы одна цифра и буква" >`,
+
     width: '700 px',
     footerButtons: [
         {
-            text: 'Ок', type: 'primary', handler() {
+            text: 'Принять', type: 'primary', handler() {
                 console.log('primary btn clicked')
-                modal.close()  //обращение к функции в дургом файле
+                let email = document.getElementById('email').value
+                let password = document.getElementById('password').value // получаем по id значение 
+                console.log(email)
+                console.log(password)
+               // sendInfo(email, password)
+                modal.close() //обращение к функции в дургом файле
             }
         },
         {
@@ -25,6 +29,8 @@
     ]
 })
 
+
+
 document.addEventListener('click', event => {
     const btnType = event.target.dataset.btn
     event.preventDefault()
@@ -33,4 +39,10 @@ document.addEventListener('click', event => {
         modal.open()
     }
 });
+
+function sendInfo() {
+    //console.log(login.value)
+    //console.log(password.value)
+    return
+}
 

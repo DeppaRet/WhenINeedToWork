@@ -1,7 +1,7 @@
 ﻿
 
-$(function () {
+//$(function () {
 
-    $('#calendar').fullCalendar();
+//    $('#calendar').fullCalendar();
 
-});
+//});

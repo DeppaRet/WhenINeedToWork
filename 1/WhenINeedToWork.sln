@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhenINeedToWork", "WhenINeedToWork\WhenINeedToWork.csproj", "{12647609-497F-4BD4-8A29-630B20617E1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhenINeedToWork.Models", "WhenINeedToWork.Models\WhenINeedToWork.Models.csproj", "{062062DD-9596-498A-B025-772D577BABAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhenINeedToWork.Models", "WhenINeedToWork.Models\WhenINeedToWork.Models.csproj", "{062062DD-9596-498A-B025-772D577BABAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhenINeedToWork.Services", "WhenINeedToWork.Services\WhenINeedToWork.Services.csproj", "{7B0E3185-2614-4F10-B4E1-56A6061695E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhenINeedToWork.Services", "WhenINeedToWork.Services\WhenINeedToWork.Services.csproj", "{7B0E3185-2614-4F10-B4E1-56A6061695E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
