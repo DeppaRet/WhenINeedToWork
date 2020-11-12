@@ -6,13 +6,13 @@
 
 <head>
 
-  @*<link href="css/calendar.css" rel="stylesheet">      старый календарь*@
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  
+  @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">*@
   <link rel="stylesheet" href="css/modal.css" />
-  <link rel="stylesheet" href="css/js-year-calendar.css" />
-  @*<link rel="stylesheet" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/bootstrap-datepicker@1.8.0/dist/css/bootstrap-datepicker.standalone.min.css" />*@
+  @*<link rel="stylesheet" href="css/js-year-calendar.css" />*@
+  <link rel="stylesheet" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-datepicker@1.8.0/dist/css/bootstrap-datepicker.standalone.min.css" />
   <link href="" />
 
 </head>
@@ -29,244 +29,328 @@
 </body>
 
 <body>
-  <form name="workDays" id="workDays">
-    <p>Выберите свой первый рабочий день</p>
-    <p>
-      <input type="date" name="calendar">
-      <select>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-      </select>
-      x
-      <select>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-      </select>
-      <input type="submit" name="submit" title="Отправить">
-    </p>
-  </form>
-  <form name="calcSalary" id="calcSalary" onsubmit="return false;">
-    <p>Введите данные для расчета ЗП</p>
-    <p>
-      Количество часов:
-      <input type="text" name="hours" id="hours" placeholder="100" style="width: 150px; left: 270px; position: absolute" />
-    </p>
-    <p>
-      Часовая ставка:
-      <input type="text" name="payment" id="payment" placeholder="100" style=" left: 270px; width: 150px; position: absolute" />
-    </p>
-    <p>
-      Тип зарплаты:
-      <select style="width: 150px; left: 270px; position: absolute" id="salaryType" name="salaryType">
-        <option>С вычетом налогов</option>
-        <option>Без вычета налогов</option>
-      </select>
-    </p>
-    <p><button type="submit" id="calculateSalary" id="calculateSalary" ;>Расчитать</button></p>
-    <div id="result"></div>
-    @*<p>
-        Приблизительная ЗП:
-        <input type="text" name="result" id="result" style=" left: 270px; width: 150px; position: absolute"
-      </p>*@
-  </form>
+<form name="workDays" id="workDays">
+  <p>Выберите свой первый рабочий день</p>
+  <p>
+    <input type="date" name="calendar">
+    <select>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+    </select>
+    x
+    <select>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+    </select>
+    <input type="submit" name="submit" title="Отправить">
+  </p>
+</form>
 
-  <div data-provide="calendar" name="calendar" id="calendar">
 
-  </div>
+<div data-provide="calendar" name="calendar" id="calendar">
 
-  <div class="modal fade" id="event-modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Event</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="event-index">
-          <form class="form-horizontal">
-            <div class="form-group row">
-              <label for="event-name" class="col-sm-4 control-label">Name</label>
-              <div class="col-sm-8">
-                <input id="event-name" name="event-name" type="text" class="form-control">
-              </div>
+</div>
+
+<div class="modal fade" id="event-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="event-index">
+        <form class="form-horizontal">
+          <div class="form-group row">
+            <label for="event-name" class="col-sm-4 control-label">Name</label>
+            <div class="col-sm-8">
+              <input id="event-name" name="event-name" type="text" class="form-control">
             </div>
-            <div class="form-group row">
-              <label for="event-location" class="col-sm-4 control-label">Location</label>
-              <div class="col-sm-8">
-                <input id="event-location" name="event-location" type="text" class="form-control">
-              </div>
+          </div>
+          <div class="form-group row">
+            <label for="event-location" class="col-sm-4 control-label">Location</label>
+            <div class="col-sm-8">
+              <input id="event-location" name="event-location" type="text" class="form-control">
             </div>
-            <div class="form-group row">
-              <label for="min-date" class="col-sm-4 control-label">Dates</label>
-              <div class="col-sm-8">
-                <div class="input-group input-daterange" data-provide="datepicker">
-                  <input id="min-date" name="event-start-date" type="text" class="form-control">
-                  <div class="input-group-prepend input-group-append">
-                    <div class="input-group-text">to</div>
-                  </div>
-                  <input name="event-end-date" type="text" class="form-control">
+          </div>
+          <div class="form-group row">
+            <label for="min-date" class="col-sm-4 control-label">Dates</label>
+            <div class="col-sm-8">
+              <div class="input-group input-daterange" data-provide="datepicker">
+                <input id="min-date" name="event-start-date" type="text" class="form-control">
+                <div class="input-group-prepend input-group-append">
+                  <div class="input-group-text">to</div>
                 </div>
+                <input name="event-end-date" type="text" class="form-control">
               </div>
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" id="save-event">
-            Save
-          </button>
-        </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="save-event">
+          Save
+        </button>
       </div>
     </div>
   </div>
+</div>
 <div id="context-menu">
 </div>
-    @*<iframe src="https://calendar.google.com/calendar/embed?height=720&amp;wkst=2&amp;bgcolor=%239decf5&amp;ctz=Europe%2FMoscow&amp;src=cnUucnVzc2lhbiNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%237986CB&amp;title=%D0%9A%D0%B0%D0%BB%D0%B5%D0%BD%D0%B4%D0%B0%D1%80%D1%8C" style="border:solid 1px #777" width="1200" height="720" frameborder="0" scrolling="no"></iframe>*@
-    @*<div id="calendar"></div>*@
-
-    @*<table id="calendarBig">
-          <thead>
-            <tr><td><td><td>
-          <tbody>
-            <tr>
-              <td>
-                <table data-m="0">
-                  <thead>
-                    <tr><td colspan="7">Январь
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-              <td>
-                <table data-m="1">
-                  <thead>
-                    <tr><td colspan="7">Февраль
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-              <td>
-                <table data-m="2">
-                  <thead>
-                    <tr><td colspan="7">Март
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-            <tr>
-              <td>
-                <table data-m="3">
-                  <thead>
-                    <tr><td colspan="7">Апрель
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-              <td>
-                <table data-m="4">
-                  <thead>
-                    <tr><td colspan="7">Май
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-              <td>
-                <table data-m="5">
-                  <thead>
-                    <tr><td colspan="7">Июнь
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-            <tr>
-              <td>
-                <table data-m="6">
-                  <thead>
-                    <tr><td colspan="7">Июль
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-              <td>
-                <table data-m="7">
-                  <thead>
-                    <tr><td colspan="7">Август
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-              <td>
-                <table data-m="8">
-                  <thead>
-                    <tr><td colspan="7">Сентябрь
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-            <tr>
-              <td>
-                <table data-m="9">
-                  <thead>
-                    <tr><td colspan="7">Октябрь
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-              <td>
-                <table data-m="10">
-                  <thead>
-                    <tr><td colspan="7">Ноябрь
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-              <td>
-                <table data-m="11">
-                  <thead>
-                    <tr><td colspan="7">Декабрь
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                  <tbody>
-                </table>
-        </table>
-      <div id="calendarTable">
-        <div data-dd="18" data-mm="8" data-text="День рождения"></div>
-        <div data-dd="5" data-mm="1" data-yyyy="2013" data-text="регулярные выражения
-      JavaScript примеры" data-link="http://shpargalkablog.ru/2013/07/replace.html"></div>
-        <div data-dd="28" data-mm="10" data-yyyy="2020" data-text="✈ встреча у бабушки
-      ☏ поздравить Ивана Ивановича с именинами
-      ☄ комета ISON"></div>
-      </div>*@
 
 
-    <a> </a>
-    <img src="~/images/printer.png" alt="Распечатать">
-    <button onclick="window.print()">Распечатать</button> @*пододвинуть кнопку вниз*@
 
-    <a href="https://www.donationalerts.com/r/deppa" target="_blank"><img src="~/images/credit-card.png" alt="Плоти"></a>
-    <a href="https://www.donationalerts.com/r/deppa">Donate</a>
+<a> </a>
+<img src="~/images/printer.png" alt="Распечатать">
+<button onclick="window.print()">Распечатать</button> @*пододвинуть кнопку вниз*@
+
+<form name="calcSalary" id="calcSalary" onsubmit="return false;">
+  <p>Введите данные для расчета ЗП</p>
+  <p>
+    Количество часов:
+    <input type="text" name="hours" id="hours" placeholder="100" style="width: 150px; left: 270px; position: absolute" />
+  </p>
+  <p>
+    Часовая ставка:
+    <input type="text" name="payment" id="payment" placeholder="100" style=" left: 270px; width: 150px; position: absolute" />
+  </p>
+  <p>
+    Тип зарплаты:
+    <select style="width: 150px; left: 270px; position: absolute" id="salaryType" name="salaryType">
+      <option>С вычетом налогов</option>
+      <option>Без вычета налогов</option>
+    </select>
+  </p>
+  <p><button type="submit" id="calculateSalary" id="calculateSalary" ;>Расчитать</button></p>
+  <div id="result"></div>
+  @*<p>
+        Приблизительная ЗП:
+        <input type="text" name="result" id="result" style=" left: 270px; width: 150px; position: absolute"
+      </p>*@
+</form>
+
+<a href="https://www.donationalerts.com/r/deppa" target="_blank"><img src="~/images/credit-card.png" alt="Плоти"></a>
+<a href="https://www.donationalerts.com/r/deppa">Donate</a>
 </body>
 
-
-
-<script src="js/js-year-calendar.js"></script>
-<script src="js/js-year-calendar.ru.js"></script>
-<script src="js/plugins/modal.js"></script>
-@*<script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://unpkg.com/popper.js@1.14.7/dist/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>*@
-
-
-
-@*<script src="js/calendar.js"></script>     Старый календарь*@
-
-
 <script src="js/base.js"></script>
+
+
+
+
+
+@*<script src="js/js-year-calendar.js"></script>
+<script src="js/js-year-calendar.ru.js"></script>*@
+<script src="js/plugins/modal.js"></script>
+<script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+  jQuery(function ($) {
+  let calendar = null;
+
+  function editEvent(event) {
+    $('#event-modal input[name="event-index"]').val(event ? event.id : '');
+    $('#event-modal input[name="event-name"]').val(event ? event.name : '');
+    $('#event-modal input[name="event-location"]').val(event ? event.location : '');
+    $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
+    $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
+    $('#event-modal').modal();
+  }
+
+  function deleteEvent(event) {
+    var dataSource = calendar.getDataSource();
+
+    calendar.setDataSource(dataSource.filter(item => item.id == event.id));
+  }
+
+  function saveEvent() {
+    var event = {
+      id: $('#event-modal input[name="event-index"]').val(),
+      name: $('#event-modal input[name="event-name"]').val(),
+      location: $('#event-modal input[name="event-location"]').val(),
+      startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
+      endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
+    }
+
+    var dataSource = calendar.getDataSource();
+
+    if (event.id) {
+      for (var i in dataSource) {
+        if (dataSource[i].id == event.id) {
+          dataSource[i].name = event.name;
+          dataSource[i].location = event.location;
+          dataSource[i].startDate = event.startDate;
+          dataSource[i].endDate = event.endDate;
+        }
+      }
+    }
+    else {
+      var newId = 0;
+      for (var i in dataSource) {
+        if (dataSource[i].id > newId) {
+          newId = dataSource[i].id;
+        }
+      }
+
+      newId++;
+      event.id = newId;
+
+      dataSource.push(event);
+    }
+
+    calendar.setDataSource(dataSource);
+    $('#event-modal').modal('hide');
+  }
+  //jQuery(document).ready(function ($)
+  $(function ()
+  {
+    var currentYear = new Date().getFullYear();
+
+    calendar = new Calendar('#calendar', {
+      enableContextMenu: true,
+      enableRangeSelection: true,
+      contextMenuItems: [
+        {
+          text: 'Update',
+          click: editEvent
+        },
+        {
+          text: 'Delete',
+          click: deleteEvent
+        }
+      ],
+      selectRange: function (e) {
+        editEvent({ startDate: e.startDate, endDate: e.endDate });
+      },
+      mouseOnDay: function (e) {
+        if (e.events.length > 0) {
+          var content = '';
+
+          for (var i in e.events) {
+            content += '<div class="event-tooltip-content">'
+              + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
+              + '<div class="event-location">' + e.events[i].location + '</div>'
+              + '</div>';
+          }
+
+          $(e.element).popover({
+            trigger: 'manual',
+            container: 'body',
+            html: true,
+            content: content
+          });
+
+          $(e.element).popover('show');
+        }
+      },
+      mouseOutDay: function (e) {
+        if (e.events.length > 0) {
+          $(e.element).popover('hide');
+        }
+      },
+      dayContextMenu: function (e) {
+        $(e.element).popover('hide');
+      },
+      dataSource: [
+        {
+          id: 0,
+          name: 'Google I/O',
+          location: 'San Francisco, CA',
+          startDate: new Date(currentYear, 4, 28),
+          endDate: new Date(currentYear, 4, 29)
+        },
+        {
+          id: 1,
+          name: 'Microsoft Convergence',
+          location: 'New Orleans, LA',
+          startDate: new Date(currentYear, 2, 16),
+          endDate: new Date(currentYear, 2, 19)
+        },
+        {
+          id: 2,
+          name: 'Microsoft Build Developer Conference',
+          location: 'San Francisco, CA',
+          startDate: new Date(currentYear, 3, 29),
+          endDate: new Date(currentYear, 4, 1)
+        },
+        {
+          id: 3,
+          name: 'Apple Special Event',
+          location: 'San Francisco, CA',
+          startDate: new Date(currentYear, 8, 1),
+          endDate: new Date(currentYear, 8, 1)
+        },
+        {
+          id: 4,
+          name: 'Apple Keynote',
+          location: 'San Francisco, CA',
+          startDate: new Date(currentYear, 8, 9),
+          endDate: new Date(currentYear, 8, 9)
+        },
+        {
+          id: 5,
+          name: 'Chrome Developer Summit',
+          location: 'Mountain View, CA',
+          startDate: new Date(currentYear, 10, 17),
+          endDate: new Date(currentYear, 10, 18)
+        },
+        {
+          id: 6,
+          name: 'F8 2015',
+          location: 'San Francisco, CA',
+          startDate: new Date(currentYear, 2, 25),
+          endDate: new Date(currentYear, 2, 26)
+        },
+        {
+          id: 7,
+          name: 'Yahoo Mobile Developer Conference',
+          location: 'New York',
+          startDate: new Date(currentYear, 7, 25),
+          endDate: new Date(currentYear, 7, 26)
+        },
+        {
+          id: 8,
+          name: 'Android Developer Conference',
+          location: 'Santa Clara, CA',
+          startDate: new Date(currentYear, 11, 1),
+          endDate: new Date(currentYear, 11, 4)
+        },
+        {
+          id: 9,
+          name: 'LA Tech Summit',
+          location: 'Los Angeles, CA',
+          startDate: new Date(currentYear, 10, 17),
+          endDate: new Date(currentYear, 10, 17)
+        }
+      ]
+    });
+
+    $('#save-event').click(function () {
+      saveEvent();
+    });
+  });
+  });
+</script>
 @*между ними*@
 
-<script src="js/plugins/year-calendar.js"></script>     @*скорее всего код для календаря надо нпаисать там*@
+@*<script src="js/plugins/year-calendar.js"></script>*@     @*скорее всего код для календаря надо нпаисать там*@
 <script src="js/plugins/modal.js"></script>
 
 <script src="js/index.js"></script> @*обязательно в конце*@

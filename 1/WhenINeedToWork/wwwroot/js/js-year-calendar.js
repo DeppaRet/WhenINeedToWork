@@ -82,13 +82,13 @@
 
 
   var Calendar = /*#__PURE__*/function () {
-    /**
+    /*
      * Fired when a day is clicked.
      * @event
      * @example
      * ```
      * 
-     * document.querySelector('.calendar').addEventListener('clickDay', function(e) {
+     *  document.querySelector('.calendar').addEventListener('clickDay', function(e) {
      *   console.log("Click on day: " + e.date + " (" + e.events.length + " events)");
      * })
      * ```
@@ -1988,15 +1988,16 @@
   _exports["default"] = Calendar;
 
   _defineProperty(Calendar, "locales", {
-    en: {
-        days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-        months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        weekShort: 'W',
-        weekStart: 0
-    }
+      en: {
+          days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+          daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+          months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+          monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          weekShort: 'W',
+          weekStart: 0
+       
+      }
     //  },
     //ru: {
     //    days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],

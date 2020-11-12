@@ -3,7 +3,5 @@
   "name": "asp.net",
   "type": "module",
   "private": true,
-  "devDependencies": {
-    "js-year-calendar": "*"
-  }
+  "devDependencies": {}
 }
