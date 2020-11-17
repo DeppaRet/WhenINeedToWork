@@ -46,7 +46,7 @@ function calculate() {
     if (document.getElementById('salaryType').value === 'С вычетом налогов') {
         calculated = calculated * 0.87;
     }
-    html = 'Рассчитанная ЗП:' + calculated;
+    html = 'Рассчитанная ЗП: ' + calculated;
     console.log(calculated);
     document.getElementById('result').innerHTML = html;
 
