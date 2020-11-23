@@ -1,12 +1,15 @@
-﻿const modal = $.modal({
+﻿//import * as additionalMethods from "../lib/jquery-validation/dist/additional-methods"
+
+const modal = $.modal({
     title: 'Authorization',
     closable: true,
     content: `
+    <form method="post">
     <p>Логин</p> 
     <input id="email" type="email" name="login" asp-for="email" placeholder="Komm.mm@yandex.ru">
     <p>Пароль</p> 
-    <input id="password" type="password" name = "password" asp-for="password" pattern="(?=.*\d)(?=.*[a-zA-Zа-яА-Я]).{6,}" title="Не менее 6 знаков, в том числе хотя бы одна цифра и буква" >`,
-
+    <input id="password" type="password" name = "password" asp-for="password" pattern="(?=.*\d)(?=.*[a-zA-Zа-яА-Я]).{6,}" title="Не менее 6 знаков, в том числе хотя бы одна цифра и буква" >
+    </form>`,
     width: '700 px',
     footerButtons: [
         {
@@ -16,8 +19,7 @@
                 let password = document.getElementById('password').value // получаем по id значение 
                 console.log(email)
                 console.log(password)
-               // sendInfo(email, password)
-                modal.close() //обращение к функции в дургом файле
+                modal.close() //обращение к функции в другом файле
             }
         },
         {
@@ -27,6 +29,7 @@
             }
         }
     ]
+    
 })
 
 
@@ -54,9 +57,5 @@ function calculate() {
 
 document.getElementById('calculateSalary').addEventListener('click', calculate);
 
-function sendInfo() {
-    //console.log(login.value)
-    //console.log(password.value)
-    return
-}
+
 

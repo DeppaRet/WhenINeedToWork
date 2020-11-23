@@ -4,10 +4,11 @@ using System.Text;
 
 namespace WhenINeedToWork.Models
 {
-    public class User
+    public class Event
     {
         public int id { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
+        public int Calendar_id { get; set; }
+        public DateTime Date { get; set; }
+        public string Content { get; set; }
     }
 }

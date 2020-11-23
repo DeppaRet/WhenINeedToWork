@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WhenINeedToWork.Services
 {
-    public interface ICalendarRepository
+    public interface IEventRepository
     {
     }
 }

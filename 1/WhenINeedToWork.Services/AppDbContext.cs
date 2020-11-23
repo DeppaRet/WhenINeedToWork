@@ -12,7 +12,9 @@ namespace WhenINeedToWork.Services
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         { 
         }
-        public DbSet<WhenINeedToWork.Models.Calendar> Calendars { get; set; }
+        public DbSet<Models.Calendar> Calendars { get; set; }
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Event> Event { get; set; }
     }
 }
