@@ -23,7 +23,7 @@ namespace WhenINeedToWork
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContextPool<AppDbContext>(options => {
-          options.UseSqlServer(Configuration.GetConnectionString(""));
+          options.UseSqlServer(Configuration.GetConnectionString("ModelsDBConnection"));
       });
       services.AddScoped<ICalendarRepository, SQLCalendarRepository>();
       services.AddScoped<IUserRepository, SQLUserRepository>();
