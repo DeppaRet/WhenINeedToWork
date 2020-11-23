@@ -29,7 +29,7 @@
 </body>
 
 
-<body>
+@*<body>
   <div class="card" style="margin:10px;">
     <div class="card-header">Parameters</div>
     <div class="card-body">
@@ -75,7 +75,6 @@
             <label for="style" class="col-sm-3 col-xs-12 control-label">Language</label>
             <div class="col col-sm-5 col-xs-6">
               <select class="form-control" id="language">
-                <option value="nl">Dutch</option>
                 <option value="en" selected>English</option>
                 <option value="ru">Russian</option>
               </select>
@@ -183,7 +182,7 @@
       <div id="calendar"></div>
     </div>
   </div>
-</body>
+</body>*@
 
 <body>
   <form name="workDays" id="workDays">
@@ -214,9 +213,9 @@
   </form>
 
 
-  @*<div data-provide="calendar" name="calendar" id="calendar">
+  <div data-provide="calendar" name="calendar" id="calendar">
 
-  </div>*@
+  </div>
 
   <div class="modal fade" id="event-modal">
     <div class="modal-dialog">
@@ -340,7 +339,7 @@
   }
 </script>
 
-<script>
+@*<script>
   const currentYear = new Date().getFullYear();
 
   const calendar = new Calendar('#calendar', {
@@ -444,12 +443,49 @@
 
   document.querySelector('#get-half-day').addEventListener('click', function () {
     alert(calendar.getAlwaysHalfDay());
-  });</script>
+  });</script>*@
 
 <script>
   jQuery(function ($) {
     let calendar = null;
+    $(function () {    //короче тут пытаемся отрисовать хз
+      var currentYear = new Date().getFullYear();
 
+      var redDateTime = new Date(currentYear, 2, 13).getTime();
+      var circleDateTime = new Date(currentYear, 1, 20).getTime();
+      var borderDateTime = new Date(currentYear, 0, 12).getTime();
+      var obj = {customDayRenderer: function(element, Date) {
+      if(Date.getTime() == redDateTime) {
+              $(element).css('font-weight', 'bold');
+              $(element).css('font-size', '15px');
+              $(element).css('color', 'green');
+        }
+      }
+      }
+      //var currentYear = new Date().getFullYear();
+
+    //var redDateTime = new Date(currentYear, 2, 13).getTime();
+    //var circleDateTime = new Date(currentYear, 1, 20).getTime();
+    //var borderDateTime = new Date(currentYear, 0, 12).getTime();
+
+    //$('#calendar').calendar({
+    //  customDayRenderer: function(element, date) {
+    //    if(date.getTime() == redDateTime) {
+    //      $(element).css('font-weight', 'bold');
+    //      $(element).css('font-size', '15px');
+    //      $(element).css('color', 'green');
+    //    }
+    //    else if(date.getTime() == circleDateTime) {
+    //      $(element).css('background-color', 'red');
+    //      $(element).css('color', 'white');
+    //      $(element).css('border-radius', '15px');
+    //    }
+    //    else if(date.getTime() == borderDateTime) {
+    //      $(element).css('border', '2px solid blue');
+    //    }
+    //  }
+    //});
+    });
     function editEvent(event) {
       $('#event-modal input[name="event-index"]').val(event ? event.id : '');
       $('#event-modal input[name="event-name"]').val(event ? event.name : '');
@@ -462,8 +498,13 @@
     function deleteEvent(event) {
       var dataSource = calendar.getDataSource();
 
-      calendar.setDataSource(dataSource.filter(item => item.id == event.id));
+      calendar.setDataSource(dataSource.filter(item => item.id != event.id));
     }
+
+    //function saveWorkEvent(var id, var name, var location, var startDate, var endDate)
+    //{
+    //  var dataSource = calendar.getDataSource();
+    //}
 
     function saveEvent() {
       var event = {
