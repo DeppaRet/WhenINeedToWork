@@ -1,0 +1,21 @@
+﻿@page
+@model WhenINeedToWork.Pages.LoginModel
+@{
+}
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-datepicker@1.8.0/dist/css/bootstrap-datepicker.standalone.min.css" />
+</head>
+
+<body>
+<form method="post">
+  <p>Логин</p>
+  <input id="email" type="email" name="login"  placeholder="Komm.mm@yandex.ru">
+  <p>Пароль</p>
+  <input id="password" type="password" name="password" pattern="(?=.*\d)(?=.*[a-zA-Zа-яА-Я]).{6,}" title="Не менее 6 знаков, в том числе хотя бы одна цифра и буква">
+  <button>Войти</button>
+  </form>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
