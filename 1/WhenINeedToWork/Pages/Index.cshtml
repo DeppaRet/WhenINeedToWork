@@ -188,7 +188,7 @@
   <form name="workDays" id="workDays">
     <p>Выберите свой первый рабочий день</p>
     <p>
-      <input type="date" name="calendar">
+      <input type="date" name="calendar" value="2020-07-22">
       <select>
         <option>1</option>
         <option>2</option>
@@ -208,7 +208,7 @@
         <option>6</option>
         <option>7</option>
       </select>
-      <input type="submit" name="submit" title="Отправить">
+      <input type="submit" name="submit" title="Построить календарь" value="Построить календарь"> @*submit нужен для отправки на сервер*@
     </p>
   </form>
 
@@ -256,7 +256,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
           <button type="button" class="btn btn-primary" id="save-event">
             Сохранить
           </button>
@@ -269,19 +269,17 @@
 
 
   <br />
-  <img src="~/images/printer.png" alt="Распечатать">
-  <a href="javascript:void(0);" onclick="printPageArea('calendar')">Print</a>
-  <button onclick="window.print()">Распечатать</button> @*пододвинуть кнопку вниз*@
+  
 
   <form name="calcSalary" id="calcSalary" onsubmit="return false;">
     <p>Введите данные для расчета ЗП</p>
     <p>
       Количество часов:
-      <input type="text" name="hours" id="hours" placeholder="100" style="width: 150px; left: 270px; position: absolute" />
+      <input type="text" name="hours" id="hours" autocomplete="off" placeholder="100" style="width: 150px; left: 270px; position: absolute" onkeyup="this.value = this.value.replace(/[^\d]/g,'');"/>
     </p>
     <p>
       Часовая ставка:
-      <input type="text" name="payment" id="payment" placeholder="100" style=" left: 270px; width: 150px; position: absolute" />
+      <input type="text" name="payment" autocomplete="off" id="payment" placeholder="100" style=" left: 270px; width: 150px; position: absolute" onkeyup="this.value = this.value.replace(/[^\d]/g,'');"/>
     </p>
     <p>
       Тип зарплаты:
@@ -290,7 +288,7 @@
         <option>Без вычета налогов</option>
       </select>
     </p>
-    <p><button type="submit" id="calculateSalary" id="calculateSalary" ;>Расчитать</button></p>
+    <p><button type="submit" id="calculateSalary";>Расчитать</button></p>
     <div id="result"></div>
     @*<p>
         Приблизительная ЗП:
@@ -298,8 +296,17 @@
       </p>*@
   </form>
 
-  <a href="https://www.donationalerts.com/r/deppa" target="_blank"><img src="~/images/credit-card.png" alt="Плоти"></a>
-  <a href="https://www.donationalerts.com/r/deppa">Donate</a>
+  
+  <div class="text-center">
+    <img src="~/images/question.png" alt="Помощь">
+    <a asp-page="/Help">Помощь   </a>
+    <img src="~/images/printer.png" alt="Распечатать">
+    <a href="javascript:void(0);" onclick="printPageArea('calendar')">Распечатать     </a>
+    <!--<button onclick="window.print()">Распечатать</button>--> @*пододвинуть кнопку вниз*@
+    <a href="https://www.donationalerts.com/r/deppa" target="_blank"><img src="~/images/credit-card.png" alt="Плоти"></a>
+    <a href="https://www.donationalerts.com/r/deppa">Поддержать проект</a>
+  </div>
+
 </body>
 
 <script src="js/base.js"></script>
@@ -339,111 +346,6 @@
   }
 </script>
 
-@*<script>
-  const currentYear = new Date().getFullYear();
-
-  const calendar = new Calendar('#calendar', {
-    style: 'background',
-    dataSource: [
-      {
-        startDate: new Date(currentYear, 1, 4),
-        endDate: new Date(currentYear, 1, 15)
-      },
-      {
-        startDate: new Date(currentYear, 3, 5),
-        endDate: new Date(currentYear, 5, 15)
-      }
-    ]
-  });
-
-  document.querySelector('#update-current-year').addEventListener('click', function () {
-    calendar.setYear(document.querySelector('#current-year').value);
-  });
-
-  document.querySelector('#get-current-year').addEventListener('click', function () {
-    alert(calendar.getYear());
-  });
-
-  document.querySelector('#update-min-date').addEventListener('click', function () {
-    calendar.setMinDate(document.querySelector('#min-date').valueAsDate);
-  });
-
-  document.querySelector('#get-min-date').addEventListener('click', function () {
-    alert(calendar.getMinDate());
-  });
-
-  document.querySelector('#update-max-date').addEventListener('click', function () {
-    calendar.setMaxDate(document.querySelector('#max-date').valueAsDate);
-  });
-
-  document.querySelector('#get-max-date').addEventListener('click', function () {
-    alert(calendar.getMaxDate());
-  });
-
-  document.querySelector('#update-language').addEventListener('click', function () {
-    calendar.setLanguage(document.querySelector('#language').value);
-  });
-
-  document.querySelector('#get-language').addEventListener('click', function () {
-    alert(calendar.getLanguage());
-  });
-
-  document.querySelector('#update-style').addEventListener('click', function () {
-    if (document.querySelector('#style-border').checked) {
-      calendar.setStyle('border');
-      document.querySelector('#round-range-limit').disabled = true;
-      document.querySelector('#always-half-day').disabled = true;
-    }
-    else {
-      calendar.setStyle('background');
-      document.querySelector('#round-range-limit').disabled = false;
-      document.querySelector('#always-half-day').disabled = false;
-    }
-  });
-
-  document.querySelector('#get-style').addEventListener('click', function () {
-    alert(calendar.getStyle());
-  });
-
-  document.querySelector('#update-overlap').addEventListener('click', function () {
-    calendar.setAllowOverlap(document.querySelector('#allow-overlap').checked);
-  });
-
-  document.querySelector('#get-overlap').addEventListener('click', function () {
-    alert(calendar.getAllowOverlap());
-  });
-
-  document.querySelector('#update-range-selection').addEventListener('click', function () {
-    calendar.setEnableRangeSelection(document.querySelector('#enable-range-selection').checked);
-  });
-
-  document.querySelector('#get-range-selection').addEventListener('click', function () {
-    alert(calendar.getEnableRangeSelection());
-  });
-
-  document.querySelector('#update-week-number').addEventListener('click', function () {
-    calendar.setDisplayWeekNumber(document.querySelector('#display-week-number').checked);
-  });
-
-  document.querySelector('#get-week-number').addEventListener('click', function () {
-    alert(calendar.getDisplayWeekNumber());
-  });
-
-  document.querySelector('#update-round-limit').addEventListener('click', function () {
-    calendar.setRoundRangeLimits(document.querySelector('#round-range-limit').checked);
-  });
-
-  document.querySelector('#get-round-limit').addEventListener('click', function () {
-    alert(calendar.getRoundRangeLimits());
-  });
-
-  document.querySelector('#update-half-day').addEventListener('click', function () {
-    calendar.setAlwaysHalfDay(document.querySelector('#always-half-day').checked);
-  });
-
-  document.querySelector('#get-half-day').addEventListener('click', function () {
-    alert(calendar.getAlwaysHalfDay());
-  });</script>*@
 
 <script>
   jQuery(function ($) {
@@ -462,29 +364,7 @@
         }
       }
       }
-      //var currentYear = new Date().getFullYear();
-
-    //var redDateTime = new Date(currentYear, 2, 13).getTime();
-    //var circleDateTime = new Date(currentYear, 1, 20).getTime();
-    //var borderDateTime = new Date(currentYear, 0, 12).getTime();
-
-    //$('#calendar').calendar({
-    //  customDayRenderer: function(element, date) {
-    //    if(date.getTime() == redDateTime) {
-    //      $(element).css('font-weight', 'bold');
-    //      $(element).css('font-size', '15px');
-    //      $(element).css('color', 'green');
-    //    }
-    //    else if(date.getTime() == circleDateTime) {
-    //      $(element).css('background-color', 'red');
-    //      $(element).css('color', 'white');
-    //      $(element).css('border-radius', '15px');
-    //    }
-    //    else if(date.getTime() == borderDateTime) {
-    //      $(element).css('border', '2px solid blue');
-    //    }
-    //  }
-    //});
+    
     });
     function editEvent(event) {
       $('#event-modal input[name="event-index"]').val(event ? event.id : '');
@@ -497,7 +377,6 @@
 
     function deleteEvent(event) {
       var dataSource = calendar.getDataSource();
-
       calendar.setDataSource(dataSource.filter(item => item.id != event.id));
     }
 
@@ -624,7 +503,7 @@
           },
           {
             id: 4,
-            name: 'Apple Keynote',
+            name: 'День рождения',
             location: 'San Francisco, CA',
             startDate: new Date(currentYear, 8, 9),
             endDate: new Date(currentYear, 8, 9)
