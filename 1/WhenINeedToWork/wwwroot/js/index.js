@@ -4,12 +4,10 @@ const modal = $.modal({
     title: 'Authorization',
     closable: true,
     content: `
-    <form method="post">
     <p>Логин</p> 
     <input id="email" type="email" name="login" asp-for="email" placeholder="Komm.mm@yandex.ru">
     <p>Пароль</p> 
-    <input id="password" type="password" name = "password" asp-for="password" pattern="(?=.*\d)(?=.*[a-zA-Zа-яА-Я]).{6,}" title="Не менее 6 знаков, в том числе хотя бы одна цифра и буква" >
-    </form>`,
+    <input id="password" type="password" name = "password" asp-for="password" pattern="(?=.*\d)(?=.*[a-zA-Zа-яА-Я]).{6,}" title="Не менее 6 знаков, в том числе хотя бы одна цифра и буква" >`,
     width: '700 px',
     footerButtons: [
         {
@@ -28,8 +26,7 @@ const modal = $.modal({
                 modal.close()
             }
         }
-    ]
-    
+    ]   
 })
 
 

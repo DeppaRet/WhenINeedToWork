@@ -9,8 +9,10 @@ namespace WhenINeedToWork.Pages
 {
     public class LoginModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnPost(string login,string password)
         {
+            string s = login + password;
+            return Page();
         }
     }
 }

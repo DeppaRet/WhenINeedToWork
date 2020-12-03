@@ -8,5 +8,7 @@ namespace WhenINeedToWork.Services
     public interface IUserRepository
     { 
         User GetUser(string email);
+        User Add(User newUser);
+
     }
 }
