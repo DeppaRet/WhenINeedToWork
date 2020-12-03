@@ -9,6 +9,7 @@ namespace WhenINeedToWork.Services
     { 
         User GetUser(string email);
         User Add(User newUser);
+        User GetUserById(int id);
 
     }
 }

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model WhenINeedToWork.Pages.UserCabinetModel
 @{
 }
@@ -20,7 +20,7 @@
 
       <ul class="list-group">
         <li class="list-group-item text-muted">Профиль</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Псевдоним</strong></span>"Сюда пихаем логин"</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Псевдоним</strong></span>@Model.IUser.email</li>
 
       </ul>
 

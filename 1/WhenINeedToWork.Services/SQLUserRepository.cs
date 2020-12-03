@@ -21,6 +21,10 @@ namespace WhenINeedToWork.Services
             return newUser;
         }
 
+        public User GetUserById(int id)
+        {
+            return _context.Users.FirstOrDefault(x => x.id == id);
+        }
         public User GetUser(string email)
         {
             if (string.IsNullOrWhiteSpace(email)) {
