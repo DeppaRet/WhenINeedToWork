@@ -36,7 +36,7 @@ namespace WhenINeedToWork.Services
             return _context.Calendars.FirstOrDefault(x => x.id == id);
         }
 
-        public IEnumerable<Calendar> GetCalendars(User user)
+        public List<Calendar> GetCalendars(User user)
         {
             IEnumerable<Calendar> query = _context.Calendars;
             query = query.Where(x => x.User_ == user);

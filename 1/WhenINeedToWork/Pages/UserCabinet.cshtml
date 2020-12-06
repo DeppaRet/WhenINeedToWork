@@ -58,24 +58,28 @@
                 </tr>
               </thead>
               <tbody id="items">
-                <tr>
-                  <td>1</td>
-                  <td>Календарь</td>
-                  <td>Работа</td>
-                  <td>Дата</td>
-                  <td><input type="checkbox" id="name1"></td>
-                  <td><button type="button" asp-page="/Index" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+
+                  @for (int i = 1; i <= Model.AllUserCalendars.Count; i++)
+                  {
+                      <tr>
+                          <td>@i</td>
+                          <td>@Model.AllUserCalendars[i].Name</td>
+                          @if (Model.AllUserCalendars[i].IsGeneralized == true)
+                          {
+                              <td>Смежный календарь</td>
+                          }
+                          else
+                          {
+                              <td>Рабочий календарь</td>
+                          }
+                          <td>@Model.AllUserCalendars[i].Year</td>
+                          <td><input type="checkbox" id="name1"></td>
+                          <td><button type="button" asp-page="/Index" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                      </tr>
+                  }
+
                   @* кнопочка для редактирования *@
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Календарь</td>
-                  <td>Праздник</td>
-                  <td>Дата</td>
-                  <td><input type="checkbox" id="name2"></td>
-                  <td><button type="button" asp-page="/Index" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                </tr>
-               
+
               </tbody>
             </table>
             <hr>
