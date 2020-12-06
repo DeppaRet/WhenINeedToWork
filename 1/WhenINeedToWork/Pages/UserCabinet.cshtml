@@ -45,51 +45,53 @@
 
       <div class="tab-content"> @* Код который заполняет наши созданные календари. в этом случае в бд надо будт хранить подобный html код *@
         <div class="tab-pane active" id="home">
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <thead>
-              <tr>
-                <th>#</th>
-                <th>Название</th>
-                <th>Пометка</th>
-                <th>Дата</th>
-                <th>Выбрать</th>
-                <th>Редактировать</th>
-              </tr>
-              </thead>
-              <tbody id="items">
-                  @for (int i = 1; i <= Model.AllUserCalendars.Count; i++)
-                  {
-                      <tr>
-                          <td>@i</td>
-                          <td>@Model.AllUserCalendars[i].Name</td>
-                          @if (Model.AllUserCalendars[i].IsGeneralized == true)
-                          {
-                              <td>Смежный календарь</td>
-                          }
-                          else
-                          {
-                              <td>Рабочий календарь</td>
-                          }
-                          <td>@Model.AllUserCalendars[i].Year</td>
-                          <td><input type="checkbox" id="name1"></td>
-                          <td><button type="button" asp-page="/Index" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                      </tr>
-                  }
+            <div class="table-responsive">
+                <form method="post">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Название</th>
+                                <th>Пометка</th>
+                                <th>Дата</th>
+                                <th>Выбрать</th>
+                                <th>Редактировать</th>
+                            </tr>
+                        </thead>
 
-                  @* кнопочка для редактирования *@
-              <tr>
-                <a asp-page="/CalendarEdit" id="add" name="add">Добавить новый</a>
-              </tr>
-              </tbody>
-            </table>
-            <hr>
-            <div class="row">
-              <div class="col-md-4 col-md-offset-4 text-center">
-                <ul class="pagination" id="myPager"></ul>
-              </div>
-            </div>
-          </div><!--/table-resp-->
+                        <tbody id="items">
+
+                            @for (int i = 1; i <= Model.AllUserCalendars.Count; i++)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@Model.AllUserCalendars[i].Name</td>
+                                    @if (Model.AllUserCalendars[i].IsGeneralized == true)
+                                    {
+                                        <td>Смежный календарь</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Рабочий календарь</td>
+                                    }
+                                    <td>@Model.AllUserCalendars[i].Year</td>
+                                    <td><input type="checkbox" id="name1"></td>
+                                    <td><a asp-page="/CalendarEdit"><button type="button" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                </tr>
+                            }
+
+                            @* кнопочка для редактирования *@
+                        </tbody>
+
+                    </table>
+                </form>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 text-center">
+                        <ul class="pagination" id="myPager"></ul>
+                    </div>
+                </div>
+            </div><!--/table-resp-->
 
           <hr>
 
