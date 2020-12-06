@@ -38,27 +38,26 @@
 
     </div><!--/col-3-->
     <div class="col-sm-9">
-    @* при желании ниже можно добавить еще вкладок в личный кабинет *@
-      <ul class="nav nav-tabs" id="myTab"> 
+      @* при желании ниже можно добавить еще вкладок в личный кабинет *@
+      <ul class="nav nav-tabs" id="myTab">
         <li class="active"><a href="#home" data-toggle="tab">Календари</a></li>
       </ul>
 
-      <div class="tab-content">  @* Код который заполняет наши созданные календари. в этом случае в бд надо будт хранить подобный html код *@
+      <div class="tab-content"> @* Код который заполняет наши созданные календари. в этом случае в бд надо будт хранить подобный html код *@
         <div class="tab-pane active" id="home">
           <div class="table-responsive">
             <table class="table table-hover">
               <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Название</th>
-                  <th>Пометка</th>
-                  <th>Дата</th>
-                  <th>Выбрать</th>
-                  <th>Редактировать</th>
-                </tr>
+              <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Пометка</th>
+                <th>Дата</th>
+                <th>Выбрать</th>
+                <th>Редактировать</th>
+              </tr>
               </thead>
               <tbody id="items">
-
                   @for (int i = 1; i <= Model.AllUserCalendars.Count; i++)
                   {
                       <tr>
@@ -79,7 +78,9 @@
                   }
 
                   @* кнопочка для редактирования *@
-
+              <tr>
+                <a asp-page="/CalendarEdit" id="add" name="add">Добавить новый</a>
+              </tr>
               </tbody>
             </table>
             <hr>
@@ -93,9 +94,9 @@
           <hr>
 
         </div><!--/tab-pane-->
-        
-        
-          
+
+
+
 
       </div><!--/tab-pane-->
     </div><!--/tab-content-->
