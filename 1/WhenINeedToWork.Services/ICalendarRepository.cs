@@ -9,7 +9,7 @@ namespace WhenINeedToWork.Services
     {
         Calendar Add(Calendar newCalendar);
         Calendar Delete(int id);
-        IEnumerable<Calendar> GetCalendars(User user);
+        List<Calendar> GetCalendars(User user);
         Calendar GetCalendarById(int id);
         Calendar Update(Calendar upEvent);
     }
