@@ -63,23 +63,30 @@
 
                             @for (int i = 1; i <= Model.AllUserCalendars.Count; i++)
                             {
-                                <tr>
-                                    <td>@i</td>
-                                    <td>@Model.AllUserCalendars[i].Name</td>
-                                    @if (Model.AllUserCalendars[i].IsGeneralized == true)
-                                    {
-                                        <td>Смежный календарь</td>
-                                    }
-                                    else
-                                    {
-                                        <td>Рабочий календарь</td>
-                                    }
-                                    <td>@Model.AllUserCalendars[i].Year</td>
-                                    <td><input type="checkbox" id="name1"></td>
-                                    <td><a asp-page="/CalendarEdit"><button type="button" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                </tr>
+                              <tr>
+                                <td>@i</td>
+                                <td>@Model.AllUserCalendars[i].Name</td>
+                                @if (Model.AllUserCalendars[i].IsGeneralized == true)
+                                {
+                                  <td>Смежный календарь</td>
+                                }
+                                else
+                                {
+                                  <td>Рабочий календарь</td>
+                                }
+                                <td>@Model.AllUserCalendars[i].Year</td>
+                                <td><input type="checkbox" id="name1"></td>
+                                <td><a asp-page="/CalendarEdit"><button type="button" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                              </tr>
                             }
-
+                        <tr>
+                          <td><a asp-page="/CalendarEdit" id="add" name="add">Добавить новый</a></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td> <a asp-page="/CalendarEdit" id="unite" name="unite">Объеденить</a></td>
+                          <td></td>
+                        </tr>
                             @* кнопочка для редактирования *@
                         </tbody>
 
