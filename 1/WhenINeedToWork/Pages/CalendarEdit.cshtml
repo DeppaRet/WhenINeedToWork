@@ -15,11 +15,11 @@
 </style>
 
 <body>
-<form name="workDays" id="workDays">
+<form name="workDays" id="workDays" method="post">
   <p>Выберите свой первый рабочий день</p>
   <p>
-    <input type="date" name="calendar" value="2020-07-22">
-    <select>
+    <input type="date" name="work_start_day" value=@Model.Today>
+    <select name="working">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -29,7 +29,7 @@
       <option>7</option>
     </select>
     x
-    <select>
+    <select name="flexing">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -168,7 +168,8 @@
         name: $('#event-modal input[name="event-name"]').val(),
         location: $('#event-modal input[name="event-location"]').val(),
         startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
-        endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
+          endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate')
+        
       }
 
       var dataSource = calendar.getDataSource();

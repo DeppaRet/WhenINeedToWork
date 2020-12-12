@@ -12,5 +12,6 @@ namespace WhenINeedToWork.Services
         List<Calendar> GetCalendars(User user);
         Calendar GetCalendarById(int id);
         Calendar Update(Calendar upEvent);
+        int GetLastCalendarId();
     }
 }

@@ -36,6 +36,9 @@ namespace WhenINeedToWork.Services
             return _context.Calendars.FirstOrDefault(x => x.id == id);
         }
 
+        public int GetLastCalendarId() {
+            return _context.Calendars.Last<Calendar>().id;
+        }
         public List<Calendar> GetCalendars(User user)
         {
             IEnumerable<Calendar> query = _context.Calendars;

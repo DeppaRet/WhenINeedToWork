@@ -27,7 +27,7 @@ namespace WhenINeedToWork.Pages
         public IActionResult OnGet(int id)
         {
             IUser = _UserRepository.GetUserById(id);
-            AllUserCalendars = _CalendarRepository.GetCalendars(IUser); 
+            AllUserCalendars = _CalendarRepository.GetCalendars(IUser);
             return Page();
         }
     }
