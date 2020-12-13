@@ -15,7 +15,7 @@ namespace WhenINeedToWork.Pages
         public List<Calendar> AllUserCalendars;
 
         public IUserRepository _UserRepository;
-        
+        public string email;
 
         public ICalendarRepository _CalendarRepository;
 
@@ -27,6 +27,7 @@ namespace WhenINeedToWork.Pages
         public IActionResult OnGet(int id)
         {
             IUser = _UserRepository.GetUserById(id);
+            email = IUser.email;
             AllUserCalendars = _CalendarRepository.GetCalendars(IUser);
             return Page();
         }

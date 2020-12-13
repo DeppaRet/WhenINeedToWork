@@ -16,4 +16,8 @@
     <ProjectReference Include="..\WhenINeedToWork.Services\WhenINeedToWork.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\calendarsDescriptions\" />
+  </ItemGroup>
+
 </Project>

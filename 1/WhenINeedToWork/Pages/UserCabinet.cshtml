@@ -20,7 +20,7 @@
 
         <ul class="list-group">
             <li class="list-group-item text-muted">Профиль</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Псевдоним</strong></span>@Model.IUser.email</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Псевдоним</strong></span>@Model.email</li>
         </ul>
 
 
@@ -60,7 +60,7 @@
 
                         <tbody id="items">
                         <tr>
-                          <td> <a asp-page="/CalendarEdit" asp-route-id="@Model.IUser" id="add" name="add">Добавить новый</a></td>
+                          <td> <a asp-page="/CalendarEdit" asp-route-id="@Model.IUser.id" id="add" name="add">Добавить новый</a></td>
                           <td></td>
                           <td></td>
                           <td></td>
@@ -71,18 +71,18 @@
                             {
                               <tr>
                                 <td>@i</td>
-                                <td>@Model.AllUserCalendars[i].Name</td>
-                                @if (Model.AllUserCalendars[i].IsGeneralized == true)
+                                <td>'@Model.AllUserCalendars[i-1].Name'</td>
+                                @if (Model.AllUserCalendars[i-1].IsGeneralized == true)
                                 {
-                                  <td>Смежный календарь</td>
+                                  <td>Смежный календарь'</td>
                                 }
                                 else
                                 {
                                   <td>Рабочий календарь</td>
                                 }
-                                <td>@Model.AllUserCalendars[i].Year</td>
+                                <td>@Model.AllUserCalendars[i-1].Year</td>
                                 <td><input type="checkbox" id="name1"></td>
-                                <td><a asp-page="/CalendarEdit"><button type="button" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                <td><a asp-page="/CalendarEdit" asp-route-id="@Model.IUser.id" asp-route-calendar_id ="@Model.AllUserCalendars[i-1].id"><button type="button" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
                               </tr>
                             }
                         
