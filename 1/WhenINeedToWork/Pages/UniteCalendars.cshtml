@@ -1,0 +1,233 @@
+﻿@page
+@model WhenINeedToWork.UniteModel
+@{
+}
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-datepicker@1.8.0/dist/css/bootstrap-datepicker.standalone.min.css" />
+</head>
+
+
+
+<body>
+<div class="modal-footer">
+  <input id="calendarName" type="calendarName" name="calendarName" placeholder="Название" autocomplete="off">
+  <form asp-page-handler="save" method="post">
+    <button class="btn btn-primary">Сохранить</button>
+  </form>
+  <form asp-page-handler="redir" method="post">
+    <button class="btn btn-default">Отмена</button>
+  </form>
+</div>
+<div data-provide="calendar" name="calendar" id="calendar"></div>
+<div class="modal fade" id="event-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Событие</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Отмена">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="event-index">
+        <form class="form-horizontal">
+          <div class="form-group row">
+            <label for="event-name" class="col-sm-4 control-label">Название</label>
+            <div class="col-sm-8">
+              <input id="event-name" name="event-name" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="event-location" class="col-sm-4 control-label">Место</label>
+            <div class="col-sm-8">
+              <input id="event-location" name="event-location" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="min-date" class="col-sm-4 control-label">Дата</label>
+            <div class="col-sm-8">
+              <div class="input-group input-daterange" data-provide="datepicker">
+                <input id="min-date" name="event-start-date" type="text" class="form-control">
+                <div class="input-group-prepend input-group-append">
+                  <div class="input-group-text">to</div>
+                </div>
+                <input name="event-end-date" type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary" id="save-event">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="context-menu">
+</div>
+</body>
+
+<footer>
+  <div class="text-center">
+    <img src="~/images/question.png" alt="Помощь">
+    <a asp-page="/Help">Помощь   </a>
+    <img src="~/images/printer.png" alt="Распечатать">
+    <a href="javascript:void(0);" onclick="printPageArea('calendar')">Распечатать     </a>
+    <!--<button onclick="window.print()">Распечатать</button>--> @*пододвинуть кнопку вниз*@
+    <a href="https://www.donationalerts.com/r/deppa" target="_blank"><img src="~/images/credit-card.png" alt="Плоти"></a>
+    <a href="https://www.donationalerts.com/r/deppa">Поддержать проект</a>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.js"></script>
+<script src="https://unpkg.com/js-year-calendar@latest/locales/js-year-calendar.ru.js"></script>
+
+<script>
+  jQuery(function ($) {
+      let calendar = null;
+
+
+    function editEvent(event) {
+      $('#event-modal input[name="event-index"]').val(event ? event.id : '');
+      $('#event-modal input[name="event-name"]').val(event ? event.name : '');
+      $('#event-modal input[name="event-location"]').val(event ? event.location : '');
+      $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
+      $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
+      $('#event-modal').modal();
+    }
+
+    function deleteEvent(event) {
+      var dataSource = calendar.getDataSource();
+      calendar.setDataSource(dataSource.filter(item => item.id != event.id));
+    }
+
+    //function saveWorkEvent(var id, var name, var location, var startDate, var endDate)
+    //{
+    //  var dataSource = calendar.getDataSource();
+    //}
+
+      function saveEvent() {
+
+      var event = {
+        id: $('#event-modal input[name="event-index"]').val(),
+        name: $('#event-modal input[name="event-name"]').val(),
+        location: $('#event-modal input[name="event-location"]').val(),
+        startDate: $('#event-modal input[name="event-start-date"]').datepicker('getDate'),
+          endDate: $('#event-modal input[name="event-end-date"]').datepicker('getDate'),
+      }
+
+      var dataSource = calendar.getDataSource();
+
+      if (event.id) {
+        for (var i in dataSource) {
+          if (dataSource[i].id == event.id) {
+            dataSource[i].name = event.name;
+            dataSource[i].location = event.location;
+            dataSource[i].startDate = event.startDate;
+            dataSource[i].endDate = event.endDate;
+          }
+        }
+      }
+      else {
+        var newId = 0;
+        for (var i in dataSource) {
+          if (dataSource[i].id > newId) {
+            newId = dataSource[i].id;
+          }
+        }
+
+        newId++;
+        event.id = newId;
+
+        dataSource.push(event);
+      }
+
+      calendar.setDataSource(dataSource);
+      $('#event-modal').modal('hide');
+    }
+    //jQuery(document).ready(function ($)
+      $(function () {
+          calendar = new Calendar('#calendar', {
+              enableContextMenu: true,
+              enableRangeSelection: true,
+              contextMenuItems: [
+                  {
+                      text: 'Обновить',
+                      click: editEvent
+                  },
+                  {
+                      text: 'Удалить',
+                      click: deleteEvent
+                  }
+              ],
+              selectRange: function (e) {
+                  editEvent({ startDate: e.startDate, endDate: e.endDate });
+              },
+              mouseOnDay: function (e) {
+                  if (e.events.length > 0) {
+                      var content = '';
+
+                      for (var i in e.events) {
+                          content += '<div class="event-tooltip-content">'
+                              + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
+                              + '<div class="event-location">' + e.events[i].location + '</div>'
+                              + '</div>';
+                      }
+
+                      $(e.element).popover({
+                          trigger: 'manual',
+                          container: 'body',
+                          html: true,
+                          content: content
+                      });
+
+                      $(e.element).popover('show');
+                  }
+              },
+              mouseOutDay: function (e) {
+                  if (e.events.length > 0) {
+                      $(e.element).popover('hide');
+                  }
+              },
+              dayContextMenu: function (e) {
+                  $(e.element).popover('hide');
+              },
+              dataSource: [
+
+                 @*@for (int i = 0; i < Model.workingDays.Count; i++)
+                 {
+                    @:{
+                    @:name: 'Рабочий день',
+                    @:color: '#ff0000',
+                    @:id: @i,
+                    @:location: '-',
+                    @:startDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month-1, @Model.workingDays[i].Day),
+                    @:endDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month-1, @Model.workingDays[i].Day),
+                    @:}
+                    if (i != Model.workingDays.Count - 1)
+                     {
+                     @:,
+                     }
+                 }*@
+            ]
+      });
+
+      $('#save-event').click(function () {
+        saveEvent();
+      });
+        calendar.setStyle('background');
+        });
+  });
+</script>
+@*между ними*@
+<script src="js/index.js"></script>
