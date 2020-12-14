@@ -1,33 +1,6 @@
 ﻿//import * as additionalMethods from "../lib/jquery-validation/dist/additional-methods"
 
-const modal = $.modal({
-    title: 'Authorization',
-    closable: true,
-    content: `
-    <p>Логин</p> 
-    <input id="email" type="email" name="login" asp-for="email" placeholder="Komm.mm@yandex.ru">
-    <p>Пароль</p> 
-    <input id="password" type="password" name = "password" asp-for="password" pattern="(?=.*\d)(?=.*[a-zA-Zа-яА-Я]).{6,}" title="Не менее 6 знаков, в том числе хотя бы одна цифра и буква" >`,
-    width: '700 px',
-    footerButtons: [
-        {
-            text: 'Принять', type: 'primary', handler() {
-                console.log('primary btn clicked')
-                let email = document.getElementById('email').value
-                let password = document.getElementById('password').value // получаем по id значение 
-                console.log(email)
-                console.log(password)
-                modal.close() //обращение к функции в другом файле
-            }
-        },
-        {
-            text: 'Отмена', type: 'danger', handler() {
-                console.log('danger btn clicked')
-                modal.close()
-            }
-        }
-    ]   
-})
+
 
 
 

@@ -10,6 +10,7 @@ namespace WhenINeedToWork.Models
         public Calendar Calendar_ { get; set; }
         public DateTime Start_Date { get; set; }
         public DateTime End_Date { get; set; }
+        public string Location { get; set; }
         public string Content { get; set; }
        
     }

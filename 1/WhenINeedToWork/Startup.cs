@@ -29,7 +29,13 @@ namespace WhenINeedToWork
       services.AddScoped<IUserRepository, SQLUserRepository>();
       services.AddScoped<IEventRepository, SQLEventRepository>();
       services.AddRazorPages();
-    }
+      services.AddMvc();
+      services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+        }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

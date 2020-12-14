@@ -32,6 +32,11 @@ namespace WhenINeedToWork.Services
             return eventToDelete;
         }
 
+        public Event GetEvent(int event_id)
+        {
+            return _context.Event.FirstOrDefault(x => x.id == event_id);
+        }
+
         public IEnumerable<Event> GetEvents(Calendar calendar)
         {
             IEnumerable<Event> query = _context.Event;

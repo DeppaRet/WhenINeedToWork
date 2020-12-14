@@ -45,7 +45,6 @@
       <div class="tab-content"> @* Код который заполняет наши созданные календари. в этом случае в бд надо будт хранить подобный html код *@
         <div class="tab-pane active" id="home">
             <div class="table-responsive">
-                <form method="post">
                     <table class="table table-hover">
                         <thead>
                           <tr>
@@ -71,29 +70,30 @@
                         </tr>
                             @for (int i = 1; i <= Model.AllUserCalendars.Count; i++)
                             {
-                              <tr>
-                                <td>@i</td>
-                                <td>'@Model.AllUserCalendars[i-1].Name'</td>
-                                @if (Model.AllUserCalendars[i-1].IsGeneralized == true)
-                                {
-                                  <td>Смежный календарь'</td>
-                                }
-                                else
-                                {
-                                  <td>Рабочий календарь</td>
-                                }
-                                <td>@Model.AllUserCalendars[i-1].Year</td>
-                                <td><input type="checkbox" id="name1"></td>
-                                <td><a asp-page="/CalendarEdit" asp-route-id="@Model.IUser.id" asp-route-calendar_id ="@Model.AllUserCalendars[i-1].id"><button type="button" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
-                                <td><button type="button" data-uid="1" class="update btn btn-warning btn-sm">Удалить</button></td>
-                                </tr>
+                        <tr>
+                            <td>@i</td>
+                            <td>'@Model.AllUserCalendars[i - 1].Name'</td>
+                            @if (Model.AllUserCalendars[i - 1].IsGeneralized == true)
+                            {
+                                <td>Смежный календарь'</td>
+                            }
+                            else
+                            {
+                                <td>Рабочий календарь</td>
+                            }
+                            <td>@Model.AllUserCalendars[i - 1].Year</td>
+                            <td><input type="checkbox" id="name1"></td>
+                            <td><a asp-page="/CalendarEdit" asp-route-id="@Model.IUser.id" asp-route-calendar_id="@Model.AllUserCalendars[i-1].id"><button type="button" data-uid="1" class="update btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                            <form asp-route-id="@Model.IUser.id" asp-route-calendar_id="@Model.AllUserCalendars[i-1].id" method="post">
+                                <td><button type="submit" data-uid="1" class="update btn btn-warning btn-sm">Удалить</button></td>
+                            </form>
+                            </tr>
                             }
                         
                             @* кнопочка для редактирования *@
                         </tbody>
 
                     </table>
-                </form>
                 <hr>
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4 text-center">
