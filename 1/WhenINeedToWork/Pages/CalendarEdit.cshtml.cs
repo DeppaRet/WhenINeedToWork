@@ -87,7 +87,6 @@ namespace WhenINeedToWork.Pages
             owner = _UserRepository.GetUserById(id);
             owner_calendar = new Calendar();
             events = new List<Event>();
-            events = _EventRepository.GetEvents(owner_calendar).ToList();
             if (calendar_id != 0) {
                 owner_calendar = _CalendarRepository.GetCalendarById(calendar_id);
                 events = _EventRepository.GetEvents(owner_calendar).ToList();
@@ -187,7 +186,7 @@ namespace WhenINeedToWork.Pages
             }
             workingDays = new List<DateTime>();
             workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, work, flex);
-
+            
         }
         public void OnPostDeleteEvent() {
 
@@ -230,6 +229,7 @@ namespace WhenINeedToWork.Pages
             }
             workingDays = new List<DateTime>();
             workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, work, flex);
+            
 
         }
         public void OnPostSave(int user_id,int calendar_id,int currYear, string wsd, int working, int flexing)
@@ -376,8 +376,10 @@ namespace WhenINeedToWork.Pages
                         {
                             DateTime tempDate = new DateTime(work_start_day.Year, i, j);
                             bool evin = false;
-                            foreach (DateTime dt in eventsDateTimes) {
-                                if (tempDate.Date == dt) {
+                            foreach (DateTime dt in eventsDateTimes)
+                            {
+                                if (tempDate.Date == dt)
+                                {
                                     evin = true;
                                     break;
                                 }
@@ -391,13 +393,14 @@ namespace WhenINeedToWork.Pages
                                     tempFlexDays = flexing;
                                 }
                             }
-                        }
-                        else
-                        {
-                            tempFlexDays -= 1;
-                            if (tempFlexDays == 0)
+
+                            else
                             {
-                                tempWorkDays = working;
+                                tempFlexDays -= 1;
+                                if (tempFlexDays == 0)
+                                {
+                                    tempWorkDays = working;
+                                }
                             }
                         }
                     }

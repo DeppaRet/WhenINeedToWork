@@ -181,7 +181,7 @@
                         alert(response);
                     }
                 });
-
+            calendar.setDataSource(dataSource);
         }
 
         function saveEvent() {
@@ -228,7 +228,7 @@
             var item5 = "@Model.owner_calendar.id";
             var item6 = "@Model.work";
             var item7 = "@Model.flex";
-            
+
             $.ajax({
                 type: "POST",
                 url: "/CalendarEdit?handler=AddOrUpdate",
@@ -335,7 +335,8 @@
                     int a = (Model.events[i].id + Model.workingDays.Count);
                     @:,
                     @:{
-                    @:name: '@Model.events[i].Content',
+                    @:name: '@Model.events[i].Content'
+                    @:color: '#0000FF',
                     @:id: @a,
                     @:location: '@Model.events[i].Location',
                     @:startDate: new Date(@Model.events[i].Start_Date.Year, @Model.events[i].Start_Date.Month - 1, @Model.events[i].Start_Date.Day),
@@ -346,8 +347,9 @@
                     }
                 }
             ]});
-        calendar.setStyle('background')
-        });
+        calendar.setStyle('background');
+        
+       });
  });
 </script>}
     @*между ними*@
