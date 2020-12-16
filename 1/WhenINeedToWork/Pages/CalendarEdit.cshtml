@@ -18,7 +18,7 @@
         <p>Выберите свой первый рабочий день</p>
         <p>
             <input type="date" name="work_start_day" value=@Model.Today>
-            <select name="working">
+            <select name="working" value=@Model.work>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -28,7 +28,7 @@
                 <option>7</option>
             </select>
             x
-            <select name="flexing">
+            <select name="flexing" value=@Model.flex>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -42,7 +42,7 @@
     </form>
     <div class="modal-footer">
         <input id="calendarName" type="calendarName" name="calendarName" placeholder="Название" autocomplete="off">
-        <form asp-page-handler="save" asp-route-user_id=@Model.owner.id asp-route-calendar_id=@Model.owner_calendar.id asp-route-wsd=@Model.workstartday.ToString() asp-route-working=@Model.work asp-route-flexing=@Model.flex asp-route-currYear=@Model.currYear method="post">
+        <form asp-page-handler="SaveNewCalendar" asp-route-user_id=@Model.owner.id asp-route-calendar_id=@Model.owner_calendar.id asp-route-wsd=@Model.workstartday.ToString() asp-route-working=@Model.work asp-route-flexing=@Model.flex asp-route-currYear=@Model.currYear method="post">
             <button class="btn btn-primary">Сохранить</button>
         </form>
         <form asp-page-handler="redir" asp-route-user_id=@Model.owner.id method="post">
@@ -126,8 +126,7 @@
 <script src="https://unpkg.com/js-year-calendar@latest/locales/js-year-calendar.ru.js"></script>
 @Html.AntiForgeryToken()
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script type="text/javascript" language="JavaScript">
+    <script type="text/javascript" language="JavaScript">
     jQuery(function ($) {
         let calendar = null;
 
@@ -137,22 +136,18 @@
             $('#event-modal input[name="event-location"]').val(event ? event.location : '');
             $('#event-modal input[name="event-start-date"]').datepicker('update', event ? event.startDate : '');
             $('#event-modal input[name="event-end-date"]').datepicker('update', event ? event.endDate : '');
-
             $('#event-modal').modal();
 
         }
 
         function deleteEvent(event) {
-            var dataSource = calendar.getDataSource();
-            calendar.setDataSource(dataSource.filter(item => item.id != event.id));
-            var a = '@Model.workingDays.Count';
-            var item1 = event.id - a;
+            var item1 = event.id;
             var item3 = "@Model.workstartday";
             var item4 = "@Model.owner.id";
             var item5 = "@Model.owner_calendar.id";
             var item6 = "@Model.work";
             var item7 = "@Model.flex";
-                $.ajax({
+            $.ajax({
                     type: "POST",
                     url: "/CalendarEdit?handler=DeleteEvent",
                     beforeSend: function (xhr) {
@@ -161,6 +156,9 @@
                     },
                     data: JSON.stringify({
                         id: item1,
+                        name: event.name,
+                        startDate: event.startDate,
+                        endDate: event.endDate,
                         wStart: item3,
                         u_id: item4,
                         c_id: item5,
@@ -180,8 +178,8 @@
                     failure: function (response) {
                         alert(response);
                     }
-                });
-            calendar.setDataSource(dataSource);
+            });
+            refreshWorkCalendar();
         }
 
         function saveEvent() {
@@ -194,8 +192,9 @@
             }
 
             var dataSource = calendar.getDataSource();
-
+            var id_e = 0;
             if (event.id) {
+                id_e = event.id;
                 for (var i in dataSource) {
                     if (dataSource[i].id == event.id) {
                         dataSource[i].name = event.name;
@@ -205,24 +204,20 @@
                     }
                 }
             }
-            else {
-                var newId = 0;
-                for (var i in dataSource) {
-                    if (dataSource[i].id > newId) {
-                        newId = dataSource[i].id;
-                    }
-                }
+            //else {
+            //    var newId = 0;
+            //    for (var i in dataSource) {
+            //        if (dataSource[i].id > newId) {
+            //            newId = dataSource[i].id;
+            //        }
+            //    }
 
-                newId++;
-                event.id = newId;
+            //    newId++;
+            //    event.id = newId;
 
-                dataSource.push(event);
-            }
-            var a = '@Model.workingDays.Count';
-            var id_e = 0;
-            if (event.id != null) {
-                var id_e = event.id - a;
-            }
+            //    dataSource.push(event);
+            //}
+
             var item3 = "@Model.workstartday";
             var item4 = "@Model.owner.id";
             var item5 = "@Model.owner_calendar.id";
@@ -265,9 +260,95 @@
             calendar.setDataSource(dataSource);
             $('#event-modal').modal('hide');
         }
+
         $('#save-event').click(function () {
             saveEvent();
+            refreshWorkCalendar();
         });
+        function refreshWorkCalendar() {
+            calendar = new Calendar('#calendar', {
+                enableContextMenu: true,
+                enableRangeSelection: true,
+                contextMenuItems: [
+                    {
+                        text: 'Обновить',
+                        click: editEvent
+                    },
+                    {
+                        text: 'Удалить',
+                        click: deleteEvent
+                    }
+                ],
+                selectRange: function (e) {
+                    editEvent({ startDate: e.startDate, endDate: e.endDate });
+                },
+                mouseOnDay: function (e) {
+                    if (e.events.length > 0) {
+                        var content = '';
+
+                        for (var i in e.events) {
+                            content += '<div class="event-tooltip-content">'
+                                + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '  </div>'
+                                + '<div class="event-location>' + e.events[i].location + ' </div>'
+                                + '</div>';
+                        }
+
+                        $(e.element).popover({
+                            trigger: 'manual',
+                            container: 'body',
+                            html: true,
+                            content: content
+                        });
+
+                        $(e.element).popover('show');
+                    }
+                },
+                mouseOutDay: function (e) {
+                    if (e.events.length > 0) {
+                        $(e.element).popover('hide');
+                    }
+                },
+                dayContextMenu: function (e) {
+                    $(e.element).popover('hide');
+                },
+                dataSource: [
+                    @for (int i = 0; i < Model.events.Count; i++) {
+                        int a = Model.events[i].id;
+                        @:{
+                        @:name: '@Model.events[i].Content',
+                        @:color: '#007ba7',
+                        @:id: @a,
+                        @:location: '@Model.events[i].Location',
+                        @:startDate: new Date(@Model.events[i].Start_Date.Year, @Model.events[i].Start_Date.Month - 1, @Model.events[i].Start_Date.Day),
+                        @:endDate: new Date(@Model.events[i].End_Date.Year, @Model.events[i].End_Date.Month-1, @Model.events[i].End_Date.Day),
+                        @:}
+                        if (i != Model.events.Count - 1) {
+                             @:,
+                        }
+                    }
+                    @if (Model.events.Count > 0) {
+                        @:,
+                    }
+                    @for (int i = 0; i < Model.workingDays.Count; i++){
+                        int b = i;
+                        if (Model.events.Count != 0) b = Model.events[Model.events.Count - 1].id + (i + 1);
+                          @:{
+                          @:name: 'Рабочий день',
+                          @:color: '#ff0000',
+                          @:id: @b,
+                          @:location: '-',
+                          @:startDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month- 1, @Model.workingDays[i].Day),
+                          @:endDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month-1, @Model.workingDays[i].Day),
+                          @:}
+                          if (i != Model.workingDays.Count-1)
+                           {
+                           @:,
+                           }
+                     }
+            ]});
+        calendar.setStyle('background');
+        calendar.SetLanguage('Russian');
+        }
         //jQuery(document).ready(function ($)
         $(function () {
             calendar = new Calendar('#calendar', {
@@ -292,8 +373,8 @@
 
                         for (var i in e.events) {
                             content += '<div class="event-tooltip-content">'
-                                + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
-                                + '<div class="event-location">' + e.events[i].location + '</div>'
+                                + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '  </div>'
+                                + '<div class="event-location>' + e.events[i].location + ' </div>'
                                 + '</div>';
                         }
 
@@ -316,41 +397,45 @@
                     $(e.element).popover('hide');
                 },
                 dataSource: [
-
-                 @for (int i = 0; i < Model.workingDays.Count; i++){
-                    @:{
-                    @:name: 'Рабочий день',
-                    @:color: '#ff0000',
-                    @:id: @i,
-                    @:location: '-',
-                    @:startDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month- 1, @Model.workingDays[i].Day),
-                    @:endDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month-1, @Model.workingDays[i].Day),
-                    @:}
-                    if (i != Model.workingDays.Count - 1)
-                     {
-                     @:,
-                     }
-                }
-                @for (int i = 0; i < Model.events.Count; i++) {
-                    int a = (Model.events[i].id + Model.workingDays.Count);
-                    @:,
-                    @:{
-                    @:name: '@Model.events[i].Content'
-                    @:color: '#0000FF',
-                    @:id: @a,
-                    @:location: '@Model.events[i].Location',
-                    @:startDate: new Date(@Model.events[i].Start_Date.Year, @Model.events[i].Start_Date.Month - 1, @Model.events[i].Start_Date.Day),
-                    @:endDate: new Date(@Model.events[i].End_Date.Year, @Model.events[i].End_Date.Month-1, @Model.events[i].End_Date.Day),
-                    @:}
-                    if (i != Model.events.Count - 1){
-                     @:,
+                    @for (int i = 0; i < Model.events.Count; i++) {
+                        int a = Model.events[i].id;
+                        @:{
+                        @:name: '@Model.events[i].Content',
+                        @:color: '#007ba7',
+                        @:id: @a,
+                        @:location: '@Model.events[i].Location',
+                        @:startDate: new Date(@Model.events[i].Start_Date.Year, @Model.events[i].Start_Date.Month - 1, @Model.events[i].Start_Date.Day),
+                        @:endDate: new Date(@Model.events[i].End_Date.Year, @Model.events[i].End_Date.Month-1, @Model.events[i].End_Date.Day),
+                        @:}
+                        if (i != Model.events.Count - 1) {
+                             @:,
+                        }
                     }
-                }
+                    @if (Model.events.Count > 0) {
+                        @:,
+                    }
+                    @for (int i = 0; i < Model.workingDays.Count; i++){
+                        int b = i;
+                        if (Model.events.Count != 0) b = Model.events[Model.events.Count - 1].id + (i + 1);
+                          @:{
+                          @:name: 'Рабочий день',
+                          @:color: '#ff0000',
+                          @:id: @b,
+                          @:location: '-',
+                          @:startDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month- 1, @Model.workingDays[i].Day),
+                          @:endDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month-1, @Model.workingDays[i].Day),
+                          @:}
+                          if (i != Model.workingDays.Count-1)
+                           {
+                           @:,
+                           }
+                     }
             ]});
         calendar.setStyle('background');
-        
+        calendar.SetLanguage('Russian');
        });
+
  });
-</script>}
+    </script>}
     @*между ними*@
-    <script src="js/index.js"></script>
+   

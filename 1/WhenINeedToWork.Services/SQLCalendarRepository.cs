@@ -37,7 +37,7 @@ namespace WhenINeedToWork.Services
         }
 
         public int GetLastCalendarId() {
-            return _context.Calendars.Last<Calendar>().id;
+            return _context.Calendars.Max(p => p.id);
         }
         public List<Calendar> GetCalendars(User user)
         {

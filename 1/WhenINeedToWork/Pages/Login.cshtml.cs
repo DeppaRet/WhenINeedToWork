@@ -20,6 +20,9 @@ namespace WhenINeedToWork.Pages
         {
             _UserRepository = userRepository;
         }
+        public void OnGet(int new_calendar_id) { 
+            
+        }
         public IActionResult OnPost(string login,string password)
         {
             IUser = _UserRepository.GetUser(login);

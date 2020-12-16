@@ -20,7 +20,7 @@ namespace WhenINeedToWork.Pages
         public List<DateTime> workingDays { get; private set; }
         public List<Event> events;
         public int currYear = 2020;
-        public int work, flex;
+        public int work = 1, flex = 1;
         public Event tempEvent;
         public DateTime workstartday { get; set; }
         public User owner { get; private set; }
@@ -40,12 +40,18 @@ namespace WhenINeedToWork.Pages
             owner = new User();
             owner = _UserRepository.GetUserById(id);
             owner_calendar = new Calendar();
+            //events = new List<Event>();
+            //events = _EventRepository.GetEvents(true).ToList();
+            //foreach (Event ev in events)
+            //{
+            //    _EventRepository.Delete(ev.id);
+            //}
             events = new List<Event>();
-            events = _EventRepository.GetEvents(owner_calendar).ToList();
+            events = _EventRepository.GetEvents(true).ToList();
             if (calendar_id != 0)
             {
                 owner_calendar = _CalendarRepository.GetCalendarById(calendar_id);
-                events = _EventRepository.GetEvents(owner_calendar).ToList();
+                events.AddRange( _EventRepository.GetEvents(calendar_id).ToList());
                 work = owner_calendar.workAmount;
                 flex = owner_calendar.flexAmount;
                 currYear = owner_calendar.Year;
@@ -57,7 +63,7 @@ namespace WhenINeedToWork.Pages
                 }
                 string[] wDays = textFromFile.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                 workingDays = new List<DateTime>();
-                if (wDays[0] != "") {
+                if (wDays != null) {
                     foreach (string s in wDays)
                     {
                         workingDays.Add(Convert.ToDateTime(s));
@@ -87,13 +93,14 @@ namespace WhenINeedToWork.Pages
             owner = _UserRepository.GetUserById(id);
             owner_calendar = new Calendar();
             events = new List<Event>();
-            if (calendar_id != 0) {
+            events = _EventRepository.GetEvents(true).ToList();
+            if (calendar_id != 0)
+            {
                 owner_calendar = _CalendarRepository.GetCalendarById(calendar_id);
-                events = _EventRepository.GetEvents(owner_calendar).ToList();
+                events.AddRange( _EventRepository.GetEvents(calendar_id).ToList());
             }
             workingDays = new List<DateTime>();
             workingDays = CalculateWorkingPeriods(work_start_day, daysOfyear, events, working, flexing);
-            Page();
         }
         
         public class EventToDelete
@@ -104,6 +111,9 @@ namespace WhenINeedToWork.Pages
             public int c_id { get; set; }
             public int w { get; set; }
             public int f { get; set; }
+            public string name { get; set; }
+            public DateTime startDate { get; set; }
+            public DateTime endDate { get; set; }
         }
         public class EventToAddOrUpdate
         {
@@ -164,6 +174,7 @@ namespace WhenINeedToWork.Pages
                     tempEvent.Start_Date = sDt;
                     tempEvent.End_Date = eDt;
                     tempEvent.Content = name;
+                    tempEvent.IsTemp = true;
                     tempEvent.Location = location;
                     tempEvent.Calendar_ = owner_calendar;
                     _EventRepository.Add(tempEvent);
@@ -178,7 +189,11 @@ namespace WhenINeedToWork.Pages
                 }
             }
             events = new List<Event>();
-            events = _EventRepository.GetEvents(owner_calendar).ToList();
+            events = _EventRepository.GetEvents(true).ToList();
+            if (owner_calendar.User_ != null)
+            {
+                events.AddRange(_EventRepository.GetEvents(owner_calendar.id).ToList());
+            }
             List<int> daysOfyear = new List<int>();
             for (int i = 0; i < 12; i++)
             {
@@ -191,7 +206,9 @@ namespace WhenINeedToWork.Pages
         public void OnPostDeleteEvent() {
 
             int eventId = 0;
-            
+            DateTime sDt = new DateTime();
+            DateTime eDt = new DateTime();
+            string name = "";
             {
                 MemoryStream stream = new MemoryStream();
                 Request.Body.CopyTo(stream);
@@ -205,12 +222,16 @@ namespace WhenINeedToWork.Pages
                         if (obj != null)
                         {
                             eventId = obj.id;
-                           workstartday = Convert.ToDateTime(obj.wStart);
+                            sDt = obj.startDate.AddDays(1);
+                            eDt = obj.endDate.AddDays(1);
+                            name = obj.name;
+                            workstartday = Convert.ToDateTime(obj.wStart);
                             work = obj.w;
                             flex = obj.f;
                             owner = new User();
                             owner = _UserRepository.GetUserById(obj.u_id);
                             owner_calendar = new Calendar();
+                            owner_calendar.id = 0;
                             if (obj.c_id >= 1) {
                                 owner_calendar = _CalendarRepository.GetCalendarById(obj.c_id);
                             }
@@ -221,7 +242,11 @@ namespace WhenINeedToWork.Pages
             }
             _EventRepository.Delete(eventId);
             events = new List<Event>();
-            events = _EventRepository.GetEvents(owner_calendar).ToList();
+            events = _EventRepository.GetEvents(true).ToList();
+            if (owner_calendar.User_ != null)
+            {
+                events.AddRange(_EventRepository.GetEvents(owner_calendar.id).ToList());
+            }
             List<int> daysOfyear = new List<int>();
             for (int i = 0; i < 12; i++)
             {
@@ -229,10 +254,9 @@ namespace WhenINeedToWork.Pages
             }
             workingDays = new List<DateTime>();
             workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, work, flex);
-            
-
         }
-        public void OnPostSave(int user_id,int calendar_id,int currYear, string wsd, int working, int flexing)
+
+        public void OnPostSaveNewCalendar(int user_id,int calendar_id,int currYear, string wsd, int working, int flexing)
         {
             workstartday = new DateTime();
             workstartday = Convert.ToDateTime(wsd);
@@ -242,10 +266,12 @@ namespace WhenINeedToWork.Pages
                 daysOfyear.Add(DateTime.DaysInMonth(workstartday.Year, i + 1));
             }
             workingDays = new List<DateTime>();
-            workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, working, flexing);
             Calendar initCalendar = new Calendar();
             if (calendar_id == 0)
             {
+                events = _EventRepository.GetEvents(true).ToList();
+                workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, working, flexing);
+                initCalendar = new Calendar();
                 initCalendar.creationTime = DateTime.Now;
                 initCalendar.IsGeneralized = false;
                 initCalendar.User_ = _UserRepository.GetUserById(user_id);
@@ -270,10 +296,20 @@ namespace WhenINeedToWork.Pages
                     sw.WriteLine(wDaysDescription);
                 }
                 _CalendarRepository.Add(initCalendar);
+                int id_new_calendar = _CalendarRepository.GetLastCalendarId();
+                initCalendar = _CalendarRepository.GetCalendarById(id_new_calendar);
+                foreach (Event eve in events) {
+                    eve.Calendar_ = initCalendar;
+                    eve.IsTemp = false;
+                    _EventRepository.Update(eve);
+                }
 
             }
             else {
                 initCalendar = _CalendarRepository.GetCalendarById(calendar_id);
+                events = _EventRepository.GetEvents(true).ToList();
+                events.AddRange(_EventRepository.GetEvents(calendar_id).ToList());
+                workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, working, flexing);
                 initCalendar.Name = "test";
                 initCalendar.financialForecast = false;
                 initCalendar.HourlyRate = 0;
@@ -282,6 +318,11 @@ namespace WhenINeedToWork.Pages
                 initCalendar.flexAmount = flexing;
                 initCalendar.workAmount = working;
                 string wDaysDescription = "";
+                foreach (Event eve in events)
+                {
+                    eve.IsTemp = false;
+                    _EventRepository.Update(eve);
+                }
                 foreach (DateTime wTime in workingDays)
                 {
                     wDaysDescription += wTime.ToString() + "\n";
@@ -356,16 +397,22 @@ namespace WhenINeedToWork.Pages
             else {
                 int tempDay = work_start_day.Day, tempWorkDays = working, tempFlexDays = 0;
                 List<DateTime> eventsDateTimes = new List<DateTime>();
-                foreach (Event ev in events) {
+                foreach (Event ev in events)
+                {
                     if (ev.Start_Date == ev.End_Date)
                     {
                         eventsDateTimes.Add(ev.Start_Date.Date);
                     }
-                    else {
-                        while (ev.Start_Date != ev.End_Date) {
-                            ev.Start_Date.AddDays(1);
-                            eventsDateTimes.Add(ev.Start_Date.Date);
+                    else
+                    {
+                        DateTime date = new DateTime();
+                        date = ev.Start_Date.Date;
+                        while (date.CompareTo(ev.End_Date.Date) != 0)
+                        {
+                            eventsDateTimes.Add(date);
+                            date = date.Date.AddDays(1);
                         }
+                        eventsDateTimes.Add(date);
                     }
                 }
                 for (int i = work_start_day.Month; i <= daysOfyear.Count; i++)
@@ -378,10 +425,13 @@ namespace WhenINeedToWork.Pages
                             bool evin = false;
                             foreach (DateTime dt in eventsDateTimes)
                             {
-                                if (tempDate.Date == dt)
+                                if (tempDate.Date.CompareTo(work_start_day.Date) != 0)
                                 {
-                                    evin = true;
-                                    break;
+                                    if (tempDate.Date.CompareTo(dt.Date) == 0)
+                                    {
+                                        evin = true;
+                                        break;
+                                    }
                                 }
                             }
                             if (!evin)
@@ -393,16 +443,16 @@ namespace WhenINeedToWork.Pages
                                     tempFlexDays = flexing;
                                 }
                             }
-
-                            else
+                        }
+                        else
+                        {
+                            tempFlexDays -= 1;
+                            if (tempFlexDays == 0)
                             {
-                                tempFlexDays -= 1;
-                                if (tempFlexDays == 0)
-                                {
-                                    tempWorkDays = working;
-                                }
+                                tempWorkDays = working;
                             }
                         }
+                        
                     }
                     tempDay = 1;
                 }
@@ -415,12 +465,14 @@ namespace WhenINeedToWork.Pages
                     {
                         if (tempWorkDays != 0)
                         {
-                            workingDays.Add(new DateTime(work_start_day.Year, i, j));
-                            tempWorkDays -= 1;
-                            if (tempWorkDays == 0)
-                            {
-                                tempFlexDays = flexing;
-                            }
+                            
+                                workingDays.Add(new DateTime(work_start_day.Year, i, j));
+                                tempWorkDays -= 1;
+                                if (tempWorkDays == 0)
+                                {
+                                    tempFlexDays = flexing;
+                                }
+                            
                         }
                         else
                         {

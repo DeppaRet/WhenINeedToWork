@@ -21,9 +21,9 @@ namespace WhenINeedToWork.Services
             return newEvent;
         }
 
-        public Event Delete(int id)
+        public Event Delete(DateTime sdt, DateTime edt, string name, Calendar clr)
         {
-            var eventToDelete = _context.Event.Find(id);
+            var eventToDelete = _context.Event.FirstOrDefault(x => x.Start_Date == sdt && x.End_Date == edt && x.Content == name && x.Calendar_ == clr);
             if (eventToDelete != null)
             {
                 _context.Event.Remove(eventToDelete);
@@ -31,17 +31,41 @@ namespace WhenINeedToWork.Services
             }
             return eventToDelete;
         }
-
+        public Event Delete(int id)
+        {
+            var eventToDelete = _context.Event.FirstOrDefault(x => x.id == id);
+            if (eventToDelete != null)
+            {
+                _context.Event.Remove(eventToDelete);
+                _context.SaveChanges();
+            }
+            return eventToDelete;
+        }
         public Event GetEvent(int event_id)
         {
             return _context.Event.FirstOrDefault(x => x.id == event_id);
         }
 
-        public IEnumerable<Event> GetEvents(Calendar calendar)
+        public IEnumerable<Event> GetEvents(int calendar_id)
         {
             IEnumerable<Event> query = _context.Event;
-            query = query.Where(x => x.Calendar_ == calendar);
+            try
+            {
+                query = query.Where(x => x.Calendar_.id == calendar_id);
+                return query.ToList();
+            }
+            catch {
+                return null;
+            }
+        }
+        public IEnumerable<Event> GetEvents(bool Type)
+        {
+            IEnumerable<Event> query = _context.Event;
+            query = query.Where(x => x.IsTemp == Type);
             return query.ToList();
+        }
+        public Event GetEvent(DateTime sdt, DateTime edt, string name,Calendar clr) {
+            return _context.Event.FirstOrDefault(x => x.Start_Date == sdt && x.End_Date == edt && x.Content == name && x.Calendar_ == clr);
         }
 
         public Event Update(Event upEvent)

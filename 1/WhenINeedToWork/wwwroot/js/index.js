@@ -1,18 +1,6 @@
 ﻿//import * as additionalMethods from "../lib/jquery-validation/dist/additional-methods"
 
 
-
-
-
-document.addEventListener('click', event => {
-    const btnType = event.target.dataset.btn
-    //event.preventDefault()                       // блочит все ссылки
-
-    if (event.target.dataset.btn === 'login') {
-        modal.open()
-    }
-});
-
 function calculate() {
     var calculated = document.getElementById('hours').value * document.getElementById('payment').value;
     var html;
@@ -25,7 +13,7 @@ function calculate() {
 
 }
 
-document.getElementById('calculateSalary').addEventListener('click', calculate);
+
 
 
 

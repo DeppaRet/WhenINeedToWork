@@ -12,6 +12,6 @@ namespace WhenINeedToWork.Models
         public DateTime End_Date { get; set; }
         public string Location { get; set; }
         public string Content { get; set; }
-       
+        public bool IsTemp { get; set; }
     }
 }

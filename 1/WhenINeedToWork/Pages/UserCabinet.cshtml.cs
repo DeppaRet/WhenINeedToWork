@@ -27,6 +27,11 @@ namespace WhenINeedToWork.Pages
         }
         public IActionResult OnGet(int id)
         {
+            List<Event> events = _EventRepository.GetEvents(true).ToList();
+            foreach (Event e in events)
+            {
+                _EventRepository.Delete(e.id);
+            }
             IUser = _UserRepository.GetUserById(id);
             email = IUser.email;
             AllUserCalendars = _CalendarRepository.GetCalendars(IUser);
@@ -37,7 +42,7 @@ namespace WhenINeedToWork.Pages
             Calendar calendar = new Calendar();
             calendar = _CalendarRepository.GetCalendarById(calendar_id);
             List<Event> events = new List<Event>();
-            events = _EventRepository.GetEvents(calendar).ToList();
+            events = _EventRepository.GetEvents(calendar.id).ToList();
             foreach (Event ev in events) {
                 _EventRepository.Delete(ev.id);
             }
