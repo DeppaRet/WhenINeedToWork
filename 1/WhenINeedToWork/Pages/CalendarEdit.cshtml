@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-datepicker@1.8.0/dist/css/bootstrap-datepicker.standalone.min.css" />
+    <style>
+      input[type=submit]{
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 6px 17px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      .salary {
+        width: 500px;
+        padding: 0px;
+        text-align: left;
+      }
+    </style>
 </head>
 
 <style>
@@ -101,8 +117,31 @@
             </div>
         </div>
     </div>
-    <div id="context-menu">
-    </div>
+<div id="context-menu">
+</div>
+
+<form name="calcSalary" id="calcSalary" onsubmit="return false;">
+  <div id="salary" class="salary">
+    <p>Введите данные для расчета ЗП</p>
+    <p>
+      Количество часов:
+      <input type="text" name="hours" id="hours" autocomplete="off" style="width: 150px;" placeholder="100" onkeyup="this.value = this.value.replace(/[^\d]/g, '');" />
+    </p>
+    <p>
+      Часовая ставка:
+      <input type="text" name="payment" autocomplete="off" style="width: 170px;" id="payment" placeholder="100" onkeyup="this.value = this.value.replace(/[^\d]/g, '');" />
+    </p>
+    <p>
+      Тип зарплаты:
+      <select style="width: 180px;" id="salaryType" name="salaryType">
+        <option>С вычетом налогов</option>
+        <option>Без вычета налогов</option>
+      </select>
+    </p>
+    <p><input type="submit" id="calculateSalary" title="Рассчитать" value="Рассчитать" ;></p>
+    <div id="result"></div>
+  </div>
+</form>
 </body>
 
 <footer>
