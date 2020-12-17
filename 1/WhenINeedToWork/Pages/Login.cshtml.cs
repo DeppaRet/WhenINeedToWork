@@ -12,26 +12,44 @@ namespace WhenINeedToWork.Pages
     public class LoginModel : PageModel
     {
         public string Message { get; set; }
-        public User IUser { get; private set; }
-
+        public int tempCaledarId { get;set; }
+        public User IUser{ get; private set; }
         public IUserRepository _UserRepository;
+        public ICalendarRepository _CalendarRepository;
 
-        public LoginModel(IUserRepository userRepository)
+        public LoginModel(IUserRepository userRepository,ICalendarRepository calendarRepository)
         {
             _UserRepository = userRepository;
+            _CalendarRepository = calendarRepository;
         }
-        public void OnGet(int new_calendar_id) { 
-            
+        public void OnGet(int new_calendar_id) {
+            Message = "";
+            if (new_calendar_id != 0) {
+                tempCaledarId = new_calendar_id;
+            }
         }
-        public IActionResult OnPost(string login,string password)
+
+        public IActionResult OnPost(string login,string password,int new_calendar_id)
         {
             IUser = _UserRepository.GetUser(login);
             if (IUser != null)
             {
                 if (IUser.password == password)
                 {
-                    string url = Url.Page("UserCabinet", new { id = IUser.id});
-                    return RedirectPermanent(url);
+                    if (new_calendar_id != 0)
+                    {
+                        Calendar calendar = new Calendar();
+                        calendar = _CalendarRepository.GetCalendarById(new_calendar_id);
+                        calendar.User_ = IUser;
+                        _CalendarRepository.Update(calendar);
+                        calendar = _CalendarRepository.GetCalendarById(new_calendar_id);
+                        string url = Url.Page("CalendarEdit",new { id = IUser.id, calendar_id = calendar.id });
+                        return RedirectPermanent(url);
+                    }
+                    else {
+                        string url = Url.Page("UserCabinet", new { id = IUser.id });
+                        return RedirectPermanent(url);
+                    }
                 }
                 else
                 {
@@ -45,9 +63,23 @@ namespace WhenINeedToWork.Pages
                 NewUser.email = login;
                 IUser = _UserRepository.Add(NewUser);
                 IUser = _UserRepository.GetUser(login);
-                string url = Url.Page("UserCabinet", new { id = IUser.id });
-                return RedirectPermanent(url);
+                if (new_calendar_id != 0)
+                {
+                    Calendar calendar = new Calendar();
+                    calendar = _CalendarRepository.GetCalendarById(new_calendar_id);
+                    calendar.User_ = IUser;
+                    _CalendarRepository.Update(calendar);
+                    calendar = _CalendarRepository.GetCalendarById(new_calendar_id);
+                    string url = Url.Page("CalendarEdit", new { id = IUser.id, calendar_id = calendar.id });
+                    return RedirectPermanent(url);
+                }
+                else
+                {
+                    string url = Url.Page("UserCabinet", new { id = IUser.id });
+                    return RedirectPermanent(url);
+                }
             }
+            tempCaledarId = new_calendar_id;
             return Page();
         }
     }

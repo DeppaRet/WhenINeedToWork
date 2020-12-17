@@ -24,8 +24,8 @@ namespace WhenINeedToWork.Pages
         public List<DateTime> workingDays { get; private set; }
         public List<Event> events;
         public int currYear = 2020;
-        public int work { get; set; }
-        public int flex { get; set; }
+        public int work = 1;
+        public int flex = 1;
         public Event tempEvent;
         public DateTime workstartday { get; set; }
         public User owner { get; private set; }
@@ -73,138 +73,138 @@ namespace WhenINeedToWork.Pages
             workingDays = CalculateWorkingPeriods(work_start_day, daysOfyear, events, working, flexing);
         }
 
-        public class EventToDelete
-        {
-            public int id { get; set; }
-            public string wStart { get; set; }
-            public int w { get; set; }
-            public int f { get; set; }
-            public string name { get; set; }
-            public DateTime startDate { get; set; }
-            public DateTime endDate { get; set; }
-        }
-        public class EventToAddOrUpdate
-        {
-            public int id { get; set; }
-            public string wStart { get; set; }
-            public int w { get; set; }
-            public int f { get; set; }
-            public string name { get; set; }
-            public string location { get; set; }
-            public DateTime startDate { get; set; }
-            public DateTime endDate { get; set; }
+        //public class EventToDelete
+        //{
+        //    public int id { get; set; }
+        //    public string wStart { get; set; }
+        //    public int w { get; set; }
+        //    public int f { get; set; }
+        //    public string name { get; set; }
+        //    public DateTime startDate { get; set; }
+        //    public DateTime endDate { get; set; }
+        //}
+        //public class EventToAddOrUpdate
+        //{
+        //    public int id { get; set; }
+        //    public string wStart { get; set; }
+        //    public int w { get; set; }
+        //    public int f { get; set; }
+        //    public string name { get; set; }
+        //    public string location { get; set; }
+        //    public DateTime startDate { get; set; }
+        //    public DateTime endDate { get; set; }
 
-        }
-        public void OnPostAddOrUpdate()
-        {
-            int eventId = 0;
-            DateTime sDt = new DateTime();
-            DateTime eDt = new DateTime();
-            string name = "";
-            string location = "";
-            {
-                MemoryStream stream = new MemoryStream();
-                Request.Body.CopyTo(stream);
-                stream.Position = 0;
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string requestBody = reader.ReadToEnd();
-                    if (requestBody.Length > 0)
-                    {
-                        var obj = JsonConvert.DeserializeObject<EventToAddOrUpdate>(requestBody);
-                        if (obj != null)
-                        {
-                            sDt = obj.startDate.AddDays(1);
-                            eDt = obj.endDate.AddDays(1);
-                            location = obj.location;
-                            name = obj.name;
-                            eventId = obj.id;
-                            workstartday = Convert.ToDateTime(obj.wStart);
-                            owner = new User();
-                            work = obj.w;
-                            flex = obj.f;
-                            owner_calendar = new Calendar();
-                        }
-                    }
-                }
+        //}
+        //public void OnPostAddOrUpdate()
+        //{
+        //    int eventId = 0;
+        //    DateTime sDt = new DateTime();
+        //    DateTime eDt = new DateTime();
+        //    string name = "";
+        //    string location = "";
+        //    {
+        //        MemoryStream stream = new MemoryStream();
+        //        Request.Body.CopyTo(stream);
+        //        stream.Position = 0;
+        //        using (StreamReader reader = new StreamReader(stream))
+        //        {
+        //            string requestBody = reader.ReadToEnd();
+        //            if (requestBody.Length > 0)
+        //            {
+        //                var obj = JsonConvert.DeserializeObject<EventToAddOrUpdate>(requestBody);
+        //                if (obj != null)
+        //                {
+        //                    sDt = obj.startDate.AddDays(1);
+        //                    eDt = obj.endDate.AddDays(1);
+        //                    location = obj.location;
+        //                    name = obj.name;
+        //                    eventId = obj.id;
+        //                    workstartday = Convert.ToDateTime(obj.wStart);
+        //                    owner = new User();
+        //                    work = obj.w;
+        //                    flex = obj.f;
+        //                    owner_calendar = new Calendar();
+        //                }
+        //            }
+        //        }
 
-                tempEvent = new Event();
-                tempEvent = _EventRepository.GetEvent(eventId);
-                if (tempEvent == null)
-                {
-                    tempEvent = new Event();
-                    tempEvent.Start_Date = sDt;
-                    tempEvent.End_Date = eDt;
-                    tempEvent.Content = name;
-                    tempEvent.IsTemp = true;
-                    tempEvent.Location = location;
-                    _EventRepository.Add(tempEvent);
-                }
-                else
-                {
-                    tempEvent.Start_Date = sDt;
-                    tempEvent.End_Date = eDt;
-                    tempEvent.Content = name;
-                    tempEvent.Location = location;
-                    _EventRepository.Update(tempEvent);
-                }
-            }
-            events = new List<Event>();
-            List<int> daysOfyear = new List<int>();
-            for (int i = 0; i < 12; i++)
-            {
-                daysOfyear.Add(DateTime.DaysInMonth(workstartday.Year, i + 1));
-            }
-            workingDays = new List<DateTime>();
-            workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, work, flex);
-            events = new List<Event>();
-            events = _EventRepository.GetEvents(true).ToList();
+        //        tempEvent = new Event();
+        //        tempEvent = _EventRepository.GetEvent(eventId);
+        //        if (tempEvent == null)
+        //        {
+        //            tempEvent = new Event();
+        //            tempEvent.Start_Date = sDt;
+        //            tempEvent.End_Date = eDt;
+        //            tempEvent.Content = name;
+        //            tempEvent.IsTemp = true;
+        //            tempEvent.Location = location;
+        //            _EventRepository.Add(tempEvent);
+        //        }
+        //        else
+        //        {
+        //            tempEvent.Start_Date = sDt;
+        //            tempEvent.End_Date = eDt;
+        //            tempEvent.Content = name;
+        //            tempEvent.Location = location;
+        //            _EventRepository.Update(tempEvent);
+        //        }
+        //    }
+        //    events = new List<Event>();
+        //    List<int> daysOfyear = new List<int>();
+        //    for (int i = 0; i < 12; i++)
+        //    {
+        //        daysOfyear.Add(DateTime.DaysInMonth(workstartday.Year, i + 1));
+        //    }
+        //    workingDays = new List<DateTime>();
+        //    workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, work, flex);
+        //    events = new List<Event>();
+        //    events = _EventRepository.GetEvents(true).ToList();
 
-        }
-        public void OnPostDeleteEvent()
-        {
-            int eventId = 0;
-            DateTime sDt = new DateTime();
-            DateTime eDt = new DateTime();
-            string name = "";
-            {
-                MemoryStream stream = new MemoryStream();
-                Request.Body.CopyTo(stream);
-                stream.Position = 0;
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string requestBody = reader.ReadToEnd();
-                    if (requestBody.Length > 0)
-                    {
-                        var obj = JsonConvert.DeserializeObject<EventToDelete>(requestBody);
-                        if (obj != null)
-                        {
-                            eventId = obj.id;
-                            sDt = obj.startDate.AddDays(1);
-                            eDt = obj.endDate.AddDays(1);
-                            name = obj.name;
-                            workstartday = Convert.ToDateTime(obj.wStart);
-                            work = obj.w;
-                            flex = obj.f;
-                            owner = new User();
-                            owner_calendar = new Calendar();
-                        }
-                    }
-                }
-            }
-            _EventRepository.Delete(eventId);
-            List<int> daysOfyear = new List<int>();
-            for (int i = 0; i < 12; i++)
-            {
-                daysOfyear.Add(DateTime.DaysInMonth(workstartday.Year, i + 1));
-            }
-            workingDays = new List<DateTime>();
-            workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, work, flex);
-            events = new List<Event>();
-            events = _EventRepository.GetEvents(true).ToList();
-        }
+        //}
+        //public void OnPostDeleteEvent()
+        //{
+        //    int eventId = 0;
+        //    DateTime sDt = new DateTime();
+        //    DateTime eDt = new DateTime();
+        //    string name = "";
+        //    {
+        //        MemoryStream stream = new MemoryStream();
+        //        Request.Body.CopyTo(stream);
+        //        stream.Position = 0;
+        //        using (StreamReader reader = new StreamReader(stream))
+        //        {
+        //            string requestBody = reader.ReadToEnd();
+        //            if (requestBody.Length > 0)
+        //            {
+        //                var obj = JsonConvert.DeserializeObject<EventToDelete>(requestBody);
+        //                if (obj != null)
+        //                {
+        //                    eventId = obj.id;
+        //                    sDt = obj.startDate.AddDays(1);
+        //                    eDt = obj.endDate.AddDays(1);
+        //                    name = obj.name;
+        //                    workstartday = Convert.ToDateTime(obj.wStart);
+        //                    work = obj.w;
+        //                    flex = obj.f;
+        //                    owner = new User();
+        //                    owner_calendar = new Calendar();
+        //                }
+        //            }
+        //        }
+        //    }
+        //    _EventRepository.Delete(eventId);
+        //    List<int> daysOfyear = new List<int>();
+        //    for (int i = 0; i < 12; i++)
+        //    {
+        //        daysOfyear.Add(DateTime.DaysInMonth(workstartday.Year, i + 1));
+        //    }
+        //    workingDays = new List<DateTime>();
+        //    workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, work, flex);
+        //    events = new List<Event>();
+        //    events = _EventRepository.GetEvents(true).ToList();
+        //}
 
-        public IActionResult OnPostSaveNewCalendar(int currYear, string wsd, int working, int flexing)
+        public IActionResult OnPostSaveNewCalendar(string wsd, int working, int flexing,string calendarName)
         {
             workstartday = new DateTime();
             workstartday = Convert.ToDateTime(wsd);
@@ -215,18 +215,16 @@ namespace WhenINeedToWork.Pages
             }
             workingDays = new List<DateTime>();
             Calendar initCalendar = new Calendar();
-            User user = new User();
             events = _EventRepository.GetEvents(true).ToList();
             workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, working, flexing);
             initCalendar.creationTime = DateTime.Now;
             initCalendar.IsGeneralized = false;
-            initCalendar.User_ = user;
-            initCalendar.Name = "Новый календарь";
+            initCalendar.Name = calendarName;
             //
             initCalendar.financialForecast = false;
             initCalendar.HourlyRate = 0;
             //
-            initCalendar.Year = currYear;
+            initCalendar.Year = workstartday.Year;
             initCalendar.firsWorkDay = workstartday;
             initCalendar.flexAmount = flexing;
             initCalendar.workAmount = working;
@@ -246,12 +244,7 @@ namespace WhenINeedToWork.Pages
             _CalendarRepository.Add(initCalendar);
             int id_new_calendar = _CalendarRepository.GetLastCalendarId();
             initCalendar = _CalendarRepository.GetCalendarById(id_new_calendar);
-            foreach (Event eve in events)
-            {
-                eve.Calendar_ = initCalendar;
-                _EventRepository.Update(eve);
-            }
-            string url = Url.Page("UserCabinet", new { id = owner.id });
+            string url = Url.Page("Login", new { new_calendar_id = initCalendar.id});
             return RedirectPermanent(url);
         }
         public List<DateTime> CalculateWorkingPeriods(DateTime work_start_day, List<int> daysOfyear, List<Event> events, int working, int flexing)

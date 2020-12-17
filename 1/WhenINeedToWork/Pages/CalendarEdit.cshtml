@@ -33,8 +33,16 @@
     <form asp-route-id=@Model.owner.id asp-route-calendar_id=@Model.owner_calendar.id name="workDays" id="workDays" method="post">
         <p>Выберите свой первый рабочий день</p>
         <p>
-            <input type="date" name="work_start_day" value=@Model.Today>
-            <select name="working" value=@Model.work>
+            @if (Model.workstartday.Year > 1970)
+            {
+                <input type="date" name="work_start_day" value=@Model.workstartday.ToString("yyyy-MM-dd")>
+            }
+            else
+            {
+                <input type="date" name="work_start_day" value=@Model.Today>
+            }
+            <select name="working">
+                <option selected>@Model.work</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -44,7 +52,8 @@
                 <option>7</option>
             </select>
             x
-            <select name="flexing" value=@Model.flex>
+            <select name="flexing">
+                <option selected>@Model.flex</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -375,7 +384,7 @@
                           @:name: 'Рабочий день',
                           @:color: '#ff0000',
                           @:id: @b,
-                          @:location: '-',
+                          @:location: '',
                           @:startDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month- 1, @Model.workingDays[i].Day),
                           @:endDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month-1, @Model.workingDays[i].Day),
                           @:}
@@ -460,7 +469,7 @@
                           @:name: 'Рабочий день',
                           @:color: '#ff0000',
                           @:id: @b,
-                          @:location: '-',
+                          @:location: '',
                           @:startDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month- 1, @Model.workingDays[i].Day),
                           @:endDate: new Date(@Model.workingDays[i].Year, @Model.workingDays[i].Month-1, @Model.workingDays[i].Day),
                           @:}

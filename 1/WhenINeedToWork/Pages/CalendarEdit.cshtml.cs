@@ -19,7 +19,7 @@ namespace WhenINeedToWork.Pages
         public string Today = DateTime.Now.ToString("yyyy-MM-dd");
         public List<DateTime> workingDays { get; private set; }
         public List<Event> events;
-        public int currYear = 2020;
+        public int currYear = DateTime.Now.Year;
         public int work = 1, flex = 1;
         public Event tempEvent;
         public DateTime workstartday { get; set; }
@@ -51,7 +51,9 @@ namespace WhenINeedToWork.Pages
             if (calendar_id != 0)
             {
                 owner_calendar = _CalendarRepository.GetCalendarById(calendar_id);
-                events.AddRange( _EventRepository.GetEvents(calendar_id).ToList());
+                if (_EventRepository.GetEvents(calendar_id).ToList() != null) {
+                    events.AddRange(_EventRepository.GetEvents(calendar_id).ToList());
+                }
                 work = owner_calendar.workAmount;
                 flex = owner_calendar.flexAmount;
                 currYear = owner_calendar.Year;
@@ -256,7 +258,7 @@ namespace WhenINeedToWork.Pages
             workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, work, flex);
         }
 
-        public void OnPostSaveNewCalendar(int user_id,int calendar_id,int currYear, string wsd, int working, int flexing)
+        public void OnPostSaveNewCalendar(int user_id,int calendar_id,int currYear, string wsd, int working, int flexing,string calendarName)
         {
             workstartday = new DateTime();
             workstartday = Convert.ToDateTime(wsd);
@@ -275,10 +277,10 @@ namespace WhenINeedToWork.Pages
                 initCalendar.creationTime = DateTime.Now;
                 initCalendar.IsGeneralized = false;
                 initCalendar.User_ = _UserRepository.GetUserById(user_id);
-                initCalendar.Name = "test" + initCalendar.creationTime.Millisecond;
+                initCalendar.Name = calendarName;
                 initCalendar.financialForecast = false;
                 initCalendar.HourlyRate = 0;
-                initCalendar.Year = currYear;
+                initCalendar.Year = workstartday.Year;
                 initCalendar.firsWorkDay = workstartday;
                 initCalendar.flexAmount = flexing;
                 initCalendar.workAmount = working;
@@ -310,10 +312,10 @@ namespace WhenINeedToWork.Pages
                 events = _EventRepository.GetEvents(true).ToList();
                 events.AddRange(_EventRepository.GetEvents(calendar_id).ToList());
                 workingDays = CalculateWorkingPeriods(workstartday, daysOfyear, events, working, flexing);
-                initCalendar.Name = "test";
+                initCalendar.Name = calendarName;
                 initCalendar.financialForecast = false;
                 initCalendar.HourlyRate = 0;
-                initCalendar.Year = currYear;
+                initCalendar.Year = workstartday.Year;
                 initCalendar.firsWorkDay = workstartday;
                 initCalendar.flexAmount = flexing;
                 initCalendar.workAmount = working;

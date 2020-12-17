@@ -10,9 +10,11 @@ namespace WhenINeedToWork.Pages
 {
     public class UserCabinetModel : PageModel
     {
+        [BindProperty]
+        public List<int> AreChecked { get; set; }
         public User IUser { get; private set; }
         public List<Calendar> AllUserCalendars;
-
+        
         public IUserRepository _UserRepository;
         public string email;
 
@@ -28,6 +30,7 @@ namespace WhenINeedToWork.Pages
         public IActionResult OnGet(int id)
         {
             List<Event> events = _EventRepository.GetEvents(true).ToList();
+            events.AddRange(_EventRepository.GetEvents(false).ToList());
             foreach (Event e in events)
             {
                 _EventRepository.Delete(e.id);
@@ -37,7 +40,7 @@ namespace WhenINeedToWork.Pages
             AllUserCalendars = _CalendarRepository.GetCalendars(IUser);
             return Page();
         }
-        public void OnPost(int id,int calendar_id) {
+        public void OnPostDelete(int id,int calendar_id) {
             System.IO.File.Delete(_CalendarRepository.GetCalendarById(calendar_id).DescriptionPath);
             Calendar calendar = new Calendar();
             calendar = _CalendarRepository.GetCalendarById(calendar_id);
@@ -50,6 +53,11 @@ namespace WhenINeedToWork.Pages
             IUser = _UserRepository.GetUserById(id);
             email = IUser.email;
             AllUserCalendars = _CalendarRepository.GetCalendars(IUser);
+        }
+        public IActionResult OnPost(int id) {
+            string url = Url.Page("UniteCalendars", new { id = id, owner_calendars = AreChecked });
+            return RedirectPermanent(url);
+
         }
     }
 }

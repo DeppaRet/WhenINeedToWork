@@ -179,12 +179,12 @@
       <div class="user singinBx">
         <div class="imgBx"><img src="images/calendar2.jpg"></div>
         <div class="formBx">
-          <form method="post">
+          <form asp-route-new_calendar_id="@Model.tempCaledarId" method="post">
             <h2>Вход</h2>
             <input id="email" type="email" name="login" placeholder="Логин">
             <input id="password" type="password" name="password" placeholder="Пароль" pattern="(?=.*\d)(?=.*[a-zA-Zа-яА-Я]).{6,}" title="Не менее 6 знаков, в том числе хотя бы одна цифра и буква">
             <button class="send">Войти</button>
-            <div class="wrongPass" id="wrongPass">Неверный пароль</div>
+            <div class="wrongPass" id="wrongPass">@Model.Message</div>
             @*
     <input type="submit" name="" value="Войти">*@
           </form>

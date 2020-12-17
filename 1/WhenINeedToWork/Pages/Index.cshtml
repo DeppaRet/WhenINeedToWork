@@ -50,35 +50,43 @@
         <p>
             @if (Model.workstartday.Year > 1970)
             {
-                 <input type="date" name="work_start_day" value=@Model.workstartday.ToString("yyyy-MM-dd")>
+                <input type="date" name="work_start_day" value=@Model.workstartday.ToString("yyyy-MM-dd")>
             }
-            else { 
-        <input type="date" name="work_start_day" value=@Model.Today>
+            else
+            {
+                <input type="date" name="work_start_day" value=@Model.Today>
             }
 
-            <select name="working" value=@Model.work>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-            </select>
+        <select name="working">
+            <option selected>@Model.work</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+        </select>
             x
-            <select name="flexing" value=@Model.flex>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-            </select>
+        <select name="flexing">
+            <option selected>@Model.flex</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+        </select>
             <input type="submit" name="submit" title="Построить календарь" value="Построить календарь"> @*submit нужен для отправки на сервер*@
         </p>
     </form>
-
+    <div class="modal-footer">
+        <input id="calendarName" type="calendarName" name="calendarName" placeholder="Название" autocomplete="off" value="Календарь">
+        <form asp-page-handler="SaveNewCalendar" asp-route-wsd=@Model.workstartday.ToString() asp-route-working=@Model.work asp-route-flexing=@Model.flex asp-route-currYear=@Model.currYear method="post">
+            <button class="btn btn-primary">Сохранить</button>
+        </form>
+    </div>
 
     <div data-provide="calendar" name="calendar" id="calendar">
 
