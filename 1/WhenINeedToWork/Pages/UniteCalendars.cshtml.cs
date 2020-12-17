@@ -51,6 +51,7 @@ namespace WhenINeedToWork
                 toUnite.name = t_calen.Name;
                 toUnite.WD = wd;
                 toUnite.color = colors[a];
+                a += 1;
                 if (a + 1 == colors.ToList().Count) {
                     a = 0;
                 }

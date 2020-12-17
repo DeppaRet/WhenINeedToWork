@@ -224,7 +224,7 @@
                   $(e.element).popover('hide');
               },
               dataSource: [
-                  @for (int i = 0, a = 1; i < Model.Calendars.Count; i++)
+                  @for (int i = Model.Calendars.Count-1, a = 1; i >= 0; i--)
                   {
                       for (int j = 0; j < Model.Calendars[i].WD.Count; j++,a++) {
                            @:{
@@ -235,12 +235,12 @@
                            @:startDate: new Date(@Model.Calendars[i].WD[j].Year, @Model.Calendars[i].WD[j].Month-1, @Model.Calendars[i].WD[j].Day),
                            @:endDate: new Date(@Model.Calendars[i].WD[j].Year, @Model.Calendars[i].WD[j].Month-1, @Model.Calendars[i].WD[j].Day),
                            @:}
-                           if (i != Model.Calendars[i].WD.Count - 1)
+                           if (j != Model.Calendars[i].WD.Count - 1)
                           {
                             @:,
                             }
                       }
-                      if (i != Model.Calendars.Count - 1)
+                      if (i != 0)
                                  {
                             @:,
                             }
